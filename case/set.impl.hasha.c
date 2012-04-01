@@ -72,7 +72,7 @@ void ih_case_set_print(ih_case_set_t *set,
       printf("%s,", string);
       free(string);
     } else {
-      ih_trace("get_object_as_string");
+      ih_core_trace("get_object_as_string");
     }
   }
   printf("\n");

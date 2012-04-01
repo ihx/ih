@@ -1,0 +1,10 @@
+#ifndef ih_inferno_cor3_tools_h
+#define ih_inferno_cor3_tools_h
+
+struct ih_inferno_cor3_actor_t;
+typedef struct ih_inferno_cor3_actor_t ih_inferno_cor3_actor_t;
+
+struct ih_inferno_cor3_system_t;
+typedef struct ih_inferno_cor3_system_t ih_inferno_cor3_system_t;
+
+#endif

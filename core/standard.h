@@ -30,5 +30,6 @@
 #endif
 
 #ifdef IH_PLATFORM_NETBSD
+#include <curses.h>
 #include <uuid.h>
 #endif

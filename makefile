@@ -32,7 +32,7 @@ ifeq ($(MAKECMDGOALS),release)
 endif
 
 compiler = gcc
-libraries = -lm -lpthread
+libraries = -lm -lncurses -lpthread
 library_paths = -L.
 ifeq ($(os),Darwin)
   libraries += -luuid

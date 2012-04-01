@@ -8,7 +8,7 @@ unsigned long ih_get_microseconds()
   if (gettimeofday(&now, NULL) != -1) {
     microseconds = now.tv_usec;
   } else {
-    ih_trace("gettimeofday");
+    ih_core_trace("gettimeofday");
     microseconds = 0;
   }
 
