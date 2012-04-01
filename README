@@ -5,3 +5,38 @@ cultural/genetic style.
 inhesion is bsd licensed.  support contracts are available for corporate
 customers (contact clownfysh@gmail.com).  other than that, your best bet is to
 read the code!
+
+What's inside
+  + bin                                        (environment, makefile, scripts)
+  + case                                                           (containers)
+  + config                                                (config file reading)
+  + core                                                              (objects)
+  + file                                                      (file read/write)
+  + net                                              (client/server networking)
+  + sync                                               (thread synchronization)
+
+Set up environment
+  + point $IH to the directory containing this readme.txt file
+  + add $IH/bin to $PATH
+
+Install dependencies
+  + C standard headers                                       ( stddef.h, etc. )
+    + point $IHC to them                ( somewhere like /usr/lib/gcc/include )
+  + an ANSI C compiler                  ( http://en.wikipedia.org/wiki/ANSI_C )
+  + POSIX Threads                ( http://en.wikipedia.org/wiki/POSIX_Threads )
+  + networking headers -- any non-standard??
+
+Make
+  + "cd $IH"
+  + "make help" explains the make commands
+
+If you want to commit back to the project
+  + read and follow the guide in doc/style.txt -- missing!!
+  + "make test", "make release" and "make clean" before committing
+
+Contact
+  + about                                         ( http://inhesion.com/about )
+  + source                                       ( http://inhesion.com/source )
+  + issues                                       ( http://inhesion.com/issues )
+  + wiki                                           ( http://inhesion.com/wiki )
+  + email                                               ( clownfysh@gmail.com )
