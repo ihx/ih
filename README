@@ -31,7 +31,7 @@ Make
   + "make help" explains the make commands
 
 If you want to commit back to the project
-  + read and follow the guide in doc/style.txt -- missing!!
+  + read and follow the guide in doc/style.txt
   + "make test", "make release" and "make clean" before committing
 
 Contact
