@@ -109,7 +109,8 @@ help:
 _all: _init _objects _programs
 
 _debug:
-	@echo $(object_bases)
+#	@echo $(object_bases)
+	@echo $(platform)
 
 _init:
 	@makedepend -f.make-depend $(include_paths) $(object_sources)

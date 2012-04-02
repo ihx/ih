@@ -390,10 +390,14 @@ unsigned long ih_core_wrap_index(long virtual_index, unsigned long range)
   return wrapped_index;
 }
 
-#if defined IH_PLATFORM_DARWIN
+#ifdef IH_PLATFORM_DARWIN
 #include "ih/core/tools.impl.darwin.c"
 #endif
 
-#if defined IH_PLATFORM_LINUX
+#ifdef IH_PLATFORM_LINUX
 #include "ih/core/tools.impl.linux.c"
+#endif
+
+#ifdef IH_PLATFORM_NETBSD
+#include "ih/core/tools.impl.netbsd.c"
 #endif

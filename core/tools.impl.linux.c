@@ -1,6 +1,6 @@
 #include "ih/core/tools.h"
 
-unsigned long ih_get_microseconds()
+unsigned long ih_core_get_microseconds()
 {
   struct timeval now;
   unsigned long microseconds;

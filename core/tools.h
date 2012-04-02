@@ -44,7 +44,7 @@ typedef void *(*ih_core_thread_f)(void *thread_context);
 
 ih_core_bool_t ih_core_stop_requested;
 
-unsigned long ih_get_microseconds();
+unsigned long ih_core_get_microseconds();
 
 ih_core_bool_t ih_core_get_current_time_string(ih_core_time_string_t time_string);
 
