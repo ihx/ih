@@ -26,6 +26,7 @@ Install dependencies
   + POSIX Threads                ( http://en.wikipedia.org/wiki/POSIX_Threads )
   + libjpeg                                             ( http://www.ijg.org/ )
   + curses
+  + postgresql
 
 Make
   + "cd $IH"

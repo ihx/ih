@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <dirent.h>
 #include <fcntl.h>
+#include <libpq-fe.h>
 #include <math.h>
 
 #include <pthread.h>

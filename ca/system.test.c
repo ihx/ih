@@ -40,13 +40,13 @@ static void test_water(char *name);
 void randomize_ant_name(char *name)
 {
   assert(name);
-  unsigned short eacih_char;
+  unsigned short each_char;
 
-  for (eacih_char = 0; eacih_char < 64; eacih_char++) {
+  for (each_char = 0; each_char < 64; each_char++) {
     if (ih_core_toss_coin()) {
-      *(name + eacih_char) = '1';
+      *(name + each_char) = '1';
     } else {
-      *(name + eacih_char) = '0';
+      *(name + each_char) = '0';
     }
   }
 }
@@ -54,13 +54,13 @@ void randomize_ant_name(char *name)
 void randomize_malice_name(char *name)
 {
   assert(name);
-  unsigned short eacih_char;
+  unsigned short each_char;
 
-  for (eacih_char = 0; eacih_char < 64; eacih_char++) {
+  for (each_char = 0; each_char < 64; each_char++) {
     if (ih_core_toss_coin()) {
-      *(name + eacih_char) = '1';
+      *(name + each_char) = '1';
     } else {
-      *(name + eacih_char) = '0';
+      *(name + each_char) = '0';
     }
   }
 }
@@ -68,13 +68,13 @@ void randomize_malice_name(char *name)
 void randomize_water_name(char *name)
 {
   assert(name);
-  unsigned short eacih_char;
+  unsigned short each_char;
 
-  for (eacih_char = 0; eacih_char < 512; eacih_char++) {
+  for (each_char = 0; each_char < 512; each_char++) {
     if (ih_core_toss_coin()) {
-      *(name + eacih_char) = '1';
+      *(name + each_char) = '1';
     } else {
-      *(name + eacih_char) = '0';
+      *(name + each_char) = '0';
     }
   }
 }

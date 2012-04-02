@@ -260,8 +260,8 @@ ih_core_bool_t ih_ca_system_save_snapshot_jpeg(ih_ca_system_t *system,
   ih_core_color_t color;
   ih_ca_state_t *state;
   ih_ca_t *cell;
-  unsigned long eacih_step;
-  unsigned long eacih_cell;
+  unsigned long each_step;
+  unsigned long each_cell;
 
   cell_count = system->highest_cell_count;
   step_count = ih_case_array_get_size(system->state_history);
@@ -270,23 +270,23 @@ ih_core_bool_t ih_ca_system_save_snapshot_jpeg(ih_ca_system_t *system,
   if (image_buffer) {
     success = ih_core_bool_true;
 
-    eacih_step = 0;
+    each_step = 0;
     ih_case_array_iterate_start(system->state_history);
     while ((state = ih_case_array_iterate_next(system->state_history))) {
-      for (eacih_cell = 0; eacih_cell < cell_count; eacih_cell++) {
-        cell = ih_ca_state_get_cell(state, eacih_cell);
+      for (each_cell = 0; each_cell < cell_count; each_cell++) {
+        cell = ih_ca_state_get_cell(state, each_cell);
 
         system->systemey->get_cell_color(cell, &color);
 
-        image_buffer[(eacih_step * cell_count * 3)
-            + (eacih_cell * 3) + 0] = color.red;
-        image_buffer[(eacih_step * cell_count * 3)
-            + (eacih_cell * 3) + 1] = color.green;
-        image_buffer[(eacih_step * cell_count * 3)
-            + (eacih_cell * 3) + 2] = color.blue;
+        image_buffer[(each_step * cell_count * 3)
+            + (each_cell * 3) + 0] = color.red;
+        image_buffer[(each_step * cell_count * 3)
+            + (each_cell * 3) + 1] = color.green;
+        image_buffer[(each_step * cell_count * 3)
+            + (each_cell * 3) + 2] = color.blue;
 
       }
-      eacih_step++;
+      each_step++;
     }
 
     write_jpeg_file(filename, 100, image_buffer, step_count, cell_count);
@@ -305,7 +305,7 @@ ih_core_bool_t ih_ca_system_save_snapshot_text(ih_ca_system_t *system,
   assert(system);
   ih_ca_state_t *state;
   unsigned long cell_count;
-  unsigned long eacih_cell;
+  unsigned long each_cell;
   unsigned long cell_value;
   ih_file_basic_t *file;
   ih_core_bool_t success;
@@ -319,8 +319,8 @@ ih_core_bool_t ih_ca_system_save_snapshot_text(ih_ca_system_t *system,
     ih_case_array_iterate_start(system->state_history);
     while ((state = ih_case_array_iterate_next(system->state_history))) {
       cell_count = ih_ca_state_get_cell_count(state);
-      for (eacih_cell = 0; eacih_cell < cell_count; eacih_cell++) {
-        cell_value = ih_ca_state_get_cell_value(state, eacih_cell);
+      for (each_cell = 0; each_cell < cell_count; each_cell++) {
+        cell_value = ih_ca_state_get_cell_value(state, each_cell);
 
         /*
           TODO: make this into a named function

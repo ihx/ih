@@ -74,8 +74,8 @@ void *ih_ca_k3_create_context(void *parameter_object)
   unsigned long rule_number;
   unsigned long value;
   unsigned long place_value;
-  unsigned short eacih_bit;
-  unsigned short eacih_link;
+  unsigned short each_bit;
+  unsigned short each_link;
   unsigned long div;
 
   context = malloc(sizeof *context);
@@ -84,9 +84,9 @@ void *ih_ca_k3_create_context(void *parameter_object)
 
     value = rule_number;
     place_value = 8388608;  /*  2^23  */
-    for (eacih_bit = 0; eacih_bit < 24; eacih_bit++) {
+    for (each_bit = 0; each_bit < 24; each_bit++) {
       div = value / place_value;
-      *(context->rule + eacih_bit) = div;
+      *(context->rule + each_bit) = div;
       value = value % place_value;
       place_value /= 2;
       if (0 == place_value) {
@@ -94,10 +94,10 @@ void *ih_ca_k3_create_context(void *parameter_object)
       }
     }
 
-    for (eacih_link = 0; eacih_link < 8; eacih_link++) {
-      (*(context->map + eacih_link)).a = *(context->rule + (eacih_link * 3) + 0);
-      (*(context->map + eacih_link)).b = *(context->rule + (eacih_link * 3) + 1);
-      (*(context->map + eacih_link)).c = *(context->rule + (eacih_link * 3) + 2);
+    for (each_link = 0; each_link < 8; each_link++) {
+      (*(context->map + each_link)).a = *(context->rule + (each_link * 3) + 0);
+      (*(context->map + each_link)).b = *(context->rule + (each_link * 3) + 1);
+      (*(context->map + each_link)).c = *(context->rule + (each_link * 3) + 2);
     }
   } else {
     ih_core_trace("malloc");

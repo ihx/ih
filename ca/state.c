@@ -95,7 +95,7 @@ char *ih_ca_state_get_as_string(void *state_object)
 {
   assert(state_object);
   ih_ca_state_t *state;
-  unsigned long eacih_cell;
+  unsigned long each_cell;
   char *string;
   char c;
   ih_ca_t *cell;
@@ -107,15 +107,15 @@ char *ih_ca_state_get_as_string(void *state_object)
 
   string = malloc(cell_count + 1);
   if (string) {
-    for (eacih_cell = 0; eacih_cell < cell_count; eacih_cell++) {
-      cell = &(*(state->cells + eacih_cell));
+    for (each_cell = 0; each_cell < cell_count; each_cell++) {
+      cell = &(*(state->cells + each_cell));
       ih_ca_value = cell->value;
       if (ih_ca_value < 10) {
         c = 48 + ih_ca_value;
       } else {
         c = 120;
       }
-      *(string + eacih_cell) = c;
+      *(string + each_cell) = c;
     }
     *(string + cell_count) = '\0';
   } else {
