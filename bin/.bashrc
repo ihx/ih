@@ -1,6 +1,9 @@
 export IH=~/ih
-export PATH=$PATH:$IH/bin
+export IH_INCLUDE_PATH=/net/u/6/c/clownfysh/include
+export IH_LIBRARY_PATH=/net/u/6/c/clownfysh/lib
 export IHQ=1
+export PATH=$PATH:$IH/bin
+export LD_LIBRARY_PATH=/net/u/6/c/clownfysh/lib
 
 UNAME=`uname`
 if [ "$UNAME" = "Darwin" ]; then

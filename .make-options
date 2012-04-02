@@ -1,0 +1,9 @@
+clean_files += ca/snapshots/ant/*
+clean_files += ca/snapshots/clear/*
+clean_files += ca/snapshots/crow/*
+clean_files += ca/snapshots/eca/*
+clean_files += ca/snapshots/fly/*
+clean_files += ca/snapshots/k3/*
+clean_files += ca/snapshots/malice/*
+clean_files += ca/snapshots/pov/*
+clean_files += ca/snapshots/water/*

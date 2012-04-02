@@ -19,12 +19,16 @@
 #include <time.h>
 #include <unistd.h>
 
+#include <jpeglib.h>
+
 #ifdef IH_PLATFORM_DARWIN
+#include <curses.h>
 #include <sys/time.h>
 #include <uuid/uuid.h>
 #endif
 
 #ifdef IH_PLATFORM_LINUX
+#include <ncurses.h>
 #include <sys/time.h>
 #include <uuid/uuid.h>
 #endif

@@ -54,7 +54,7 @@ ih_core_bool_t ih_sync_run_is_complete(ih_sync_run_t *run)
 
   switch (run->run_style) {
 
-    case ih_SYNC_RUN_STYLE_ITERATIONS:
+    case IH_SYNC_RUN_STYLE_ITERATIONS:
       if (run->iterations >= run->max_iterations) {
         is_complete = ih_core_bool_true;
       } else {
@@ -62,7 +62,7 @@ ih_core_bool_t ih_sync_run_is_complete(ih_sync_run_t *run)
       }
       break;
 
-    case ih_SYNC_RUN_STYLE_WALL_TIME:
+    case IH_SYNC_RUN_STYLE_WALL_TIME:
       time(&current_time);
       if ((current_time - run->start_time)
           >= run->wall_time_expiration_seconds) {
@@ -72,15 +72,15 @@ ih_core_bool_t ih_sync_run_is_complete(ih_sync_run_t *run)
       }
       break;
 
-    case ih_SYNC_RUN_STYLE_GOAL_REACHED:
+    case IH_SYNC_RUN_STYLE_GOAL_REACHED:
       is_complete = run->goal_reached;
       break;
 
-    case ih_SYNC_RUN_STYLE_INFINITE:
+    case IH_SYNC_RUN_STYLE_INFINITE:
       is_complete = ih_core_bool_false;
       break;
 
-    case ih_SYNC_RUN_STYLE_UNKNOWN:
+    case IH_SYNC_RUN_STYLE_UNKNOWN:
     default:
       is_complete = ih_core_bool_false;
       break;

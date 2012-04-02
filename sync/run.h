@@ -4,11 +4,11 @@
 #include "ih/core/bool.h"
 
 enum ih_sync_run_style_t {
-  ih_SYNC_RUN_STYLE_UNKNOWN,
-  ih_SYNC_RUN_STYLE_ITERATIONS,
-  ih_SYNC_RUN_STYLE_WALL_TIME,
-  ih_SYNC_RUN_STYLE_GOAL_REACHED,
-  ih_SYNC_RUN_STYLE_INFINITE
+  IH_SYNC_RUN_STYLE_UNKNOWN,
+  IH_SYNC_RUN_STYLE_ITERATIONS,
+  IH_SYNC_RUN_STYLE_WALL_TIME,
+  IH_SYNC_RUN_STYLE_GOAL_REACHED,
+  IH_SYNC_RUN_STYLE_INFINITE
 };
 typedef enum ih_sync_run_style_t ih_sync_run_style_t;
 

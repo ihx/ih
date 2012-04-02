@@ -32,8 +32,8 @@ ifeq ($(MAKECMDGOALS),release)
 endif
 
 compiler = gcc
-libraries = -lm -lncurses -lpthread
-library_paths = -L.
+libraries = -ljpeg -lm -lncurses -lpthread
+library_paths = -L. -L$(IH_LIBRARY_PATH)
 ifeq ($(os),Darwin)
   libraries += -luuid
   library_paths += -L/opt/local/lib
@@ -46,7 +46,7 @@ endif
 ifeq ($(os),NetBSD)
   library_paths += -L/usr/local/lib -L/usr/lib
 endif
-include_paths = -I$(IH)/.. -I$(IHC)
+include_paths = -I$(IH)/.. -I$(IH_INCLUDE_PATH)
 link_options = -ansi $(build) $(platform) $(debugging) $(optimization) $(warnings) $(include_paths) -D_GNU_SOURCE $(library_paths) $(libraries)
 compile_options = -ansi $(build) $(platform) $(debugging) $(optimization) $(warnings) $(include_paths) -D_GNU_SOURCE
 
@@ -110,7 +110,9 @@ _all: _init _objects _programs
 
 _debug:
 #	@echo $(object_bases)
-	@echo $(platform)
+#	@echo $(platform)
+#	@echo $(include_paths)
+	@echo $(library_paths)
 
 _init:
 	@makedepend -f.make-depend $(include_paths) $(object_sources)
