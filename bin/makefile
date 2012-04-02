@@ -105,8 +105,7 @@ help:
 	@echo "  + stats                                              ( show code statistics )"
 	@echo "  + todo                                          ( show todo items from code )"
 
-#_all: _init _objects _programs _library
-_all: _init _objects _programs
+_all: _init _objects _programs _library
 
 _debug:
 #	@echo $(object_bases)
