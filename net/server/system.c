@@ -268,7 +268,7 @@ void *accept_thread(void *server_object)
     if (client_socket >= 0) {
       if (!create_post_for_new_client(server, client_socket)) {
         ih_core_log_trace
-          (server->log, "xnet", "cx_net_server_socket_accept");
+          (server->log, "inet", "cx_net_server_socket_accept");
       }
     }
     usleep(IH_NET_SERVER_SYSTEM_SLEEP_MICROSECONDS);
@@ -298,7 +298,7 @@ void close_disconnected_clients(ih_net_server_system_t *server)
       if (!ih_net_exchange_unregister_post
           (server->client_exchange, client_socket)) {
         ih_core_log_trace
-          (server->log, "xnet", "x_net_exchange_unregister_post");
+          (server->log, "inet", "x_net_exchange_unregister_post");
         /*  success = ih_core_bool_false;  */
       }
       ih_net_client_socket_destroy(client_socket);
@@ -333,10 +333,10 @@ void close_unresponsive_clients(ih_net_server_system_t *server)
       if (!ih_net_exchange_unregister_post(server->client_exchange,
               client_socket)) {
         ih_core_log_trace
-          (server->log, "xnet", "x_net_exchange_unregister_post");
+          (server->log, "inet", "x_net_exchange_unregister_post");
       }
       ih_net_client_socket_destroy(client_socket);
-      ih_core_log_enter(server->log, "xnet",
+      ih_core_log_enter(server->log, "inet",
           "server closed unresponsive client %u", client_socket);
     }
   }
@@ -373,7 +373,7 @@ engine_container_t *create_engine_container(ih_net_server_system_t *server,
       (IH_CORE_OBJECT_NO_COMPARE_F, IH_CORE_OBJECT_NO_COPY_F,
           IH_CORE_OBJECT_NO_DESTROY_F);
     if (!engine_container->inbox) {
-      ih_core_log_trace(server->log, "xnet", "x_case_list_create");
+      ih_core_log_trace(server->log, "inet", "x_case_list_create");
       so_far_so_good = ih_core_bool_false;
     }
   }
@@ -422,7 +422,7 @@ ih_core_bool_t create_engine_container_message_handlers
     success = ih_core_bool_true;
   } else {
     success = ih_core_bool_false;
-    ih_core_log_trace(log, "xnet", "malloc");
+    ih_core_log_trace(log, "inet", "malloc");
   }
 
   return success;
@@ -440,7 +440,7 @@ ih_core_bool_t create_engine_container_performance_period
   if (engine_container->performance_period) {
     success = ih_core_bool_true;
   } else {
-    ih_core_log_trace(log, "xnet", "x_sync_period_create");
+    ih_core_log_trace(log, "inet", "x_sync_period_create");
     success = ih_core_bool_false;
   }
 
@@ -511,14 +511,14 @@ ih_core_bool_t create_engine_container_threads
           IH_CORE_OBJECT_NO_COPY_F, messagey->destroy);
     if (!*(engine_container->thread_inboxes + each_thread)) {
       success = ih_core_bool_false;
-      ih_core_log_trace(log, "xnet", "x_case_list_create");
+      ih_core_log_trace(log, "inet", "x_case_list_create");
       break;
     }
 
     each_mutex = &engine_container->thread_inbox_mutexes[each_thread];
     if (0 != pthread_mutex_init(each_mutex, NULL)) {
       success = ih_core_bool_false;
-      ih_core_log_trace(log, "xnet", "pthread_mutex_init");
+      ih_core_log_trace(log, "inet", "pthread_mutex_init");
       break;
     }
   }
@@ -540,7 +540,7 @@ maintaining_engine_t *create_maintaining_engine
     maintaining_engine->engine_id = engine_id;
     maintaining_engine->maintain = maintain;
   } else {
-    ih_core_log_trace(server->log, "xnet", "malloc");
+    ih_core_log_trace(server->log, "inet", "malloc");
   }
 
   return maintaining_engine;
@@ -564,11 +564,11 @@ ih_core_bool_t create_post_for_new_client(ih_net_server_system_t *server,
         if (!ih_net_exchange_register_post
             (server->client_exchange, post_object)) {
           ih_core_log_trace
-            (server->log, "xnet", "x_net_exchange_register_post");
+            (server->log, "inet", "x_net_exchange_register_post");
           success = ih_core_bool_false;
         }
       } else {
-        ih_core_log_trace(server->log, "xnet", "x_case_set_add");
+        ih_core_log_trace(server->log, "inet", "x_case_set_add");
         success = ih_core_bool_false;
       }
     }
@@ -579,7 +579,7 @@ ih_core_bool_t create_post_for_new_client(ih_net_server_system_t *server,
     }
 
   } else {
-    ih_core_log_trace(server->log, "xnet", "create");
+    ih_core_log_trace(server->log, "inet", "create");
     success = ih_core_bool_false;
   }
 
@@ -620,10 +620,10 @@ ih_core_bool_t create_thread(ih_net_server_system_t *server,
       success = ih_core_bool_true;
       server->thread_count++;
     } else {
-      ih_core_log_trace(server->log, "xnet", "pthread_create");
+      ih_core_log_trace(server->log, "inet", "pthread_create");
     }
   } else {
-    ih_core_log_enter(server->log, "xnet", "threads_maxed_out");
+    ih_core_log_enter(server->log, "inet", "threads_maxed_out");
   }
 
   return success;
@@ -667,16 +667,16 @@ void deliver_messages_to_engine(ih_net_server_system_t *server,
             messages_per_second_this_period_on_this_thread);
         string = ih_core_string_append(string, little_string);
         if (!string) {
-          ih_core_log_trace(server->log, "xnet", "x_core_string_append");
+          ih_core_log_trace(server->log, "inet", "x_core_string_append");
         }
       }
-      ih_core_log_enter(server->log, "xnet", "%0.1f mps (%s) %s engine",
+      ih_core_log_enter(server->log, "inet", "%0.1f mps (%s) %s engine",
           messages_per_second_this_period, string,
           ih_core_engine_get_name(engine_container->engine_id));
       free(string);
 
     } else if (!engine_container->reported_idle) {
-      ih_core_log_enter(server->log, "xnet", "%s engine is idle",
+      ih_core_log_enter(server->log, "inet", "%s engine is idle",
           ih_core_engine_get_name(engine_container->engine_id));
       engine_container->reported_idle = ih_core_bool_true;
 
@@ -735,7 +735,7 @@ unsigned long deliver_messages_to_engine_thread
           ih_case_list_remove_first(engine_container->inbox);
           messages_delivered++;
         } else {
-          ih_core_log_trace(server->log, "xnet", "x_case_list_add_last");
+          ih_core_log_trace(server->log, "inet", "x_case_list_add_last");
         }
       }
     }
@@ -821,7 +821,7 @@ void *find_client_post(ih_net_server_system_t *server, int client_socket)
       = ih_case_set_find(server->client_posts, decoy_post_object);
     server->ipost->destroy_decoy(decoy_post_object);
   } else {
-    ih_core_log_trace(server->log, "xnet", "create_decoy");
+    ih_core_log_trace(server->log, "inet", "create_decoy");
     client_post_object = NULL;
   }
 
@@ -873,7 +873,7 @@ ih_net_server_system_t *ih_net_server_system_create(const char *name,
     so_far_so_good = ih_core_bool_true;
   } else {
     so_far_so_good = ih_core_bool_false;
-    ih_core_log_trace(server->log, "xnet", "malloc");
+    ih_core_log_trace(server->log, "inet", "malloc");
   }
 
   if (so_far_so_good) {
@@ -918,7 +918,7 @@ ih_core_bool_t ih_net_server_system_create_client_exchange
     success = ih_core_bool_true;
   } else {
     success = ih_core_bool_false;
-    ih_core_log_trace(server->log, "xnet", "x_net_exchange_create");
+    ih_core_log_trace(server->log, "inet", "x_net_exchange_create");
   }
 
   return success;
@@ -939,7 +939,7 @@ ih_core_bool_t ih_net_server_system_create_client_posts
     success = ih_core_bool_true;
   } else {
     success = ih_core_bool_false;
-    ih_core_log_trace(server->log, "xnet", "x_case_set_create");
+    ih_core_log_trace(server->log, "inet", "x_case_set_create");
   }
 
   if (success) {
@@ -947,7 +947,7 @@ ih_core_bool_t ih_net_server_system_create_client_posts
       success = ih_core_bool_true;
     } else {
       success = ih_core_bool_false;
-      ih_core_log_trace(server->log, "xnet", "pthread_mutex_init");
+      ih_core_log_trace(server->log, "inet", "pthread_mutex_init");
       ih_case_set_destroy(server->client_posts);
     }
   }
@@ -973,7 +973,7 @@ ih_core_bool_t ih_net_server_system_create_engines
     success = ih_core_bool_true;
   } else {
     success = ih_core_bool_false;
-    ih_core_log_trace(server->log, "xnet", "x_case_list_create");
+    ih_core_log_trace(server->log, "inet", "x_case_list_create");
   }
 
   return success;
@@ -991,7 +991,7 @@ ih_core_bool_t ih_net_server_system_create_outbox
     success = ih_core_bool_true;
   } else {
     success = ih_core_bool_false;
-    ih_core_log_trace(server->log, "xnet", "x_case_list_create");
+    ih_core_log_trace(server->log, "inet", "x_case_list_create");
   }
 
   if (success) {
@@ -999,7 +999,7 @@ ih_core_bool_t ih_net_server_system_create_outbox
       success = ih_core_bool_true;
     } else {
       success = ih_core_bool_false;
-      ih_core_log_trace(server->log, "xnet", "pthread_mutex_init");
+      ih_core_log_trace(server->log, "inet", "pthread_mutex_init");
       ih_case_list_destroy(server->outbox);
     }
   }
@@ -1075,7 +1075,7 @@ ih_net_server_system_get_handler_for_message
   if (message_type < engine_container->message_handlers_size) {
     handler = *(engine_container->message_handlers + message_type);
   } else {
-    ih_core_log_enter(server->log, "xnet",
+    ih_core_log_enter(server->log, "inet",
         "server has no handler for %s engine, message %lu",
         ih_core_engine_get_name(engine_container->engine_id),
         message_type);
@@ -1137,31 +1137,31 @@ void ih_net_server_system_print_stats(ih_net_server_system_t *server)
   }
 
   if (time_string) {
-    ih_core_log_enter(server->log, "xnet", "%s server: %lu engines, up %s, "
+    ih_core_log_enter(server->log, "inet", "%s server: %lu engines, up %s, "
         "handled %lu messages", server->name, stats.engine_count, time_string,
         stats.engine_handled_message_count);
   }
 
   if (stats.server_send_message_failure_count > 0) {
-    ih_core_log_enter(server->log, "xnet", "%s server_send_message() "
+    ih_core_log_enter(server->log, "inet", "%s server_send_message() "
         "failures: %lu", server->name,
         stats.server_send_message_failure_count);
   }
 
   if (stats.discarded_message_for_unregistered_engine_count > 0) {
-    ih_core_log_enter(server->log, "xnet", "%s messages received for "
+    ih_core_log_enter(server->log, "inet", "%s messages received for "
         "unregistered engines: %lu", server->name,
         stats.discarded_message_for_unregistered_engine_count);
   }
 
   if (stats.engine_cant_handle_message_count > 0) {
-    ih_core_log_enter(server->log, "xnet", "%s instances of engine can't "
+    ih_core_log_enter(server->log, "inet", "%s instances of engine can't "
         "handle message: %lu", server->name,
         stats.engine_cant_handle_message_count);
   }
 
   if (stats.engine_cant_handle_message_now_count > 0) {
-    ih_core_log_enter(server->log, "xnet", "%s instances of engine can't "
+    ih_core_log_enter(server->log, "inet", "%s instances of engine can't "
         "handle message now: %lu", server->name,
         stats.engine_cant_handle_message_now_count);
   }
@@ -1212,7 +1212,7 @@ void ih_net_server_system_process_messages(ih_net_server_system_t *server,
       }
     } else {
       message_type = server->messagey->get_type(message_object);
-      ih_core_log_enter(server->log, "xnet",
+      ih_core_log_enter(server->log, "inet",
           "server has no handler for %s engine's message %lu",
           ih_core_engine_get_name(engine_container->engine_id),
           message_type);
@@ -1253,7 +1253,7 @@ ih_core_bool_t ih_net_server_system_register_engine
   if (success) {
     server->engines_array[engine_id] = engine_container;
     if (!ih_case_list_add_last(server->engines, engine_container)) {
-      ih_core_log_trace(server->log, "xnet", "x_case_list_add_last");
+      ih_core_log_trace(server->log, "inet", "x_case_list_add_last");
       success = ih_core_bool_false;
     }
   }
@@ -1277,7 +1277,7 @@ ih_core_bool_t ih_net_server_system_register_engine_create
   if (engine_container->engine_object) {
     success = ih_core_bool_true;
   } else {
-    ih_core_log_trace(server->log, "xnet", "create");
+    ih_core_log_trace(server->log, "inet", "create");
     success = ih_core_bool_false;
   }
 
@@ -1399,7 +1399,7 @@ void *maintain_engine(void *maintaining_engine_object)
     }
     ih_sync_period_destroy(maintenance_period);
   } else {
-    ih_core_log_trace(server->log, "xnet", "x_sync_period_create");
+    ih_core_log_trace(server->log, "inet", "x_sync_period_create");
   }
 
   destroy_maintaining_engine(maintaining_engine);
@@ -1427,13 +1427,13 @@ void post_messages_to_clients(ih_net_server_system_t *server)
       if (server->ipost->send_message(client_post_object, message_object)) {
         ih_case_list_iterate_remove(server->outbox);
       } else {
-        ih_core_log_trace(server->log, "xnet", "send_message");
+        ih_core_log_trace(server->log, "inet", "send_message");
       }
     } else {
       ih_case_list_iterate_remove(server->outbox);
       server->stats.discarded_message_for_nonexistent_client_count++;
       server->messagey->destroy(message_object);
-      ih_core_log_enter(server->log, "xnet", "server "
+      ih_core_log_enter(server->log, "inet", "server "
           "post_messages_to_clients() discarded "
           "message for nonexistent client %i", client_socket);
     }
@@ -1457,12 +1457,12 @@ void receive_messages_from_client_post(ih_net_server_system_t *server,
       engine_container = server->engines_array[engine_id];
       engine_inbox = engine_container->inbox;
       if (!ih_case_list_add_last(engine_inbox, message_object)) {
-        ih_core_log_trace(server->log, "xnet", "x_case_list_add_last");
+        ih_core_log_trace(server->log, "inet", "x_case_list_add_last");
         server->stats.discarded_message_engine_inbox_add_failed_count++;
         server->messagey->destroy(message_object);
       }
     } else {
-      ih_core_log_enter(server->log, "xnet",
+      ih_core_log_enter(server->log, "inet",
           "server discarded message type %lu for %s "
           "engine because the engine is not registered",
           server->messagey->get_type(message_object),
@@ -1528,9 +1528,9 @@ ih_core_bool_t serversocket_bind_listen(ih_net_server_system_t *server)
     server->socket = ih_net_server_socket_create(port);
     if (server->socket >= 0) {
       success = ih_core_bool_true;
-      ih_core_log_enter(server->log, "xnet", "listening on port %i", port);
+      ih_core_log_enter(server->log, "inet", "listening on port %i", port);
     } else {
-      ih_core_log_enter(server->log, "xnet", "x_net_serversocket_create");
+      ih_core_log_enter(server->log, "inet", "x_net_serversocket_create");
     }
   }
 
@@ -1588,7 +1588,7 @@ ih_core_bool_t start(ih_net_server_system_t *server)
     engine_id = engine_container->engine_id;
     if (!start_engine(server, engine_id)) {
       success = ih_core_bool_false;
-      ih_core_log_trace(server->log, "xnet", "start_engine");
+      ih_core_log_trace(server->log, "inet", "start_engine");
       break;
     }
   }
@@ -1596,7 +1596,7 @@ ih_core_bool_t start(ih_net_server_system_t *server)
   if (success) {
     if (!serversocket_bind_listen(server)) {
       success = ih_core_bool_false;
-      ih_core_log_trace(server->log, "xnet", "serversocket_bind_listen");
+      ih_core_log_trace(server->log, "inet", "serversocket_bind_listen");
     }
   }
 
@@ -1606,7 +1606,7 @@ ih_core_bool_t start(ih_net_server_system_t *server)
       server->accept_thread_created = ih_core_bool_true;
     } else {
       success = ih_core_bool_false;
-      ih_core_log_trace(server->log, "xnet", "create_thread");
+      ih_core_log_trace(server->log, "inet", "create_thread");
     }
   }
 

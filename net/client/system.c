@@ -62,7 +62,7 @@ ih_core_bool_t connect_to_server(ih_net_client_system_t *client)
       client->server_socket_closed = ih_core_bool_false;
       client->server_port = port;
 
-      ih_core_log_enter(client->log, "xnet",
+      ih_core_log_enter(client->log, "inet",
           "client connected to server on port %i", port);
 
       pthread_mutex_lock(&client->messaging_mutex);
@@ -73,7 +73,7 @@ ih_core_bool_t connect_to_server(ih_net_client_system_t *client)
               (client->exchange, client->post)) {
             success = ih_core_bool_true;
           } else {
-            ih_core_log_trace(client->log, "xnet",
+            ih_core_log_trace(client->log, "inet",
                 "x_net_exchange_register_post");
             ih_net_client_socket_destroy(client->socket);
             client->server_socket_closed = ih_core_bool_true;
@@ -81,7 +81,7 @@ ih_core_bool_t connect_to_server(ih_net_client_system_t *client)
             client->post = NULL;
           }
         } else {
-          ih_core_log_trace(client->log, "xnet", "x_net_post_create");
+          ih_core_log_trace(client->log, "inet", "x_net_post_create");
           ih_net_client_socket_destroy(client->socket);
           client->server_socket_closed = ih_core_bool_true;
         }
@@ -89,7 +89,7 @@ ih_core_bool_t connect_to_server(ih_net_client_system_t *client)
       pthread_mutex_unlock(&client->messaging_mutex);
 
     } else {
-      ih_core_log_enter(client->log, "xnet",
+      ih_core_log_enter(client->log, "inet",
           "client could not connect to server on port %i", port);
     }
   }
@@ -117,9 +117,9 @@ ih_core_bool_t ensure_client_is_connected(ih_net_client_system_t *client)
   if (client->server_socket_closed) {
     connected = connect_to_server(client);
     if (connected) {
-      ih_core_log_enter(client->log, "xnet", "reconnected to server");
+      ih_core_log_enter(client->log, "inet", "reconnected to server");
     } else {
-      ih_core_log_enter(client->log, "xnet", "could not reconnect to server");
+      ih_core_log_enter(client->log, "inet", "could not reconnect to server");
     }
   }
 
@@ -131,7 +131,7 @@ ih_core_bool_t handle_disconnect(ih_net_client_system_t *client)
   assert(client);
   ih_core_bool_t success;
 
-  ih_core_log_enter(client->log, "xnet", "lost connection to server");
+  ih_core_log_enter(client->log, "inet", "lost connection to server");
 
   if (ih_net_exchange_unregister_post(client->exchange, client->socket)) {
     success = ih_core_bool_true;
@@ -139,7 +139,7 @@ ih_core_bool_t handle_disconnect(ih_net_client_system_t *client)
     client->post = NULL;
   } else {
     success = ih_core_bool_false;
-    ih_core_log_trace(client->log, "xnet", "x_net_exchange_unregister_post");
+    ih_core_log_trace(client->log, "inet", "x_net_exchange_unregister_post");
   }
 
   return success;
@@ -191,7 +191,7 @@ ih_net_client_system_t *ih_net_client_system_create
     success = ih_core_bool_true;
   } else {
     success = ih_core_bool_false;
-    ih_core_log_trace(client->log, "xnet", "malloc");
+    ih_core_log_trace(client->log, "inet", "malloc");
   }
 
   if (success) {
@@ -221,7 +221,7 @@ ih_net_client_system_t *ih_net_client_system_create
       messaging_mutex_needs_destroy = ih_core_bool_true;
     } else {
       success = ih_core_bool_false;
-      ih_core_log_trace(client->log, "xnet", "pthread_mutex_init");
+      ih_core_log_trace(client->log, "inet", "pthread_mutex_init");
     }
   }
 
@@ -229,7 +229,7 @@ ih_net_client_system_t *ih_net_client_system_create
     connected = connect_to_server(client);
     if (!connected) {
       success = ih_core_bool_false;
-      ih_core_log_trace(client->log, "xnet", "connect_to_server");
+      ih_core_log_trace(client->log, "inet", "connect_to_server");
     }
   }
 
@@ -338,7 +338,7 @@ void ih_net_client_system_process_messages(ih_net_client_system_t *client)
       ih_core_message_destroy(message);
     }
   } else {
-    ih_core_log_trace(client->log, "xnet", "ensure_client_is_connected");
+    ih_core_log_trace(client->log, "inet", "ensure_client_is_connected");
   }
 }
 
@@ -355,7 +355,7 @@ ih_core_bool_t ih_net_client_system_register_engine
     engine_container->engine_id = engine_id;
     success = ih_core_bool_true;
   } else {
-    ih_core_log_trace(client->log, "xnet", "malloc");
+    ih_core_log_trace(client->log, "inet", "malloc");
     success = ih_core_bool_false;
   }
 
@@ -371,7 +371,7 @@ ih_core_bool_t ih_net_client_system_register_engine
       }
       success = ih_core_bool_true;
     } else {
-      ih_core_log_trace(client->log, "xnet", "malloc");
+      ih_core_log_trace(client->log, "inet", "malloc");
       success = ih_core_bool_false;
     }
   }
@@ -418,19 +418,19 @@ ih_core_bool_t ih_net_client_system_send_message
         if (ih_net_post_system_is_socket_closed(client->post)) {
           client->server_socket_closed = ih_core_bool_true;
           if (!handle_disconnect(client)) {
-            ih_core_log_trace(client->log, "xnet", "handle_disconnect");
+            ih_core_log_trace(client->log, "inet", "handle_disconnect");
           }
         }
       } else {
         success = ih_core_bool_false;
-        ih_core_log_trace(client->log, "xnet", "x_net_post_send_message");
+        ih_core_log_trace(client->log, "inet", "x_net_post_send_message");
       }
     }
     pthread_mutex_unlock(&client->messaging_mutex);
 
   } else {
     success = ih_core_bool_false;
-    ih_core_log_trace(client->log, "xnet", "ensure_client_is_connected");
+    ih_core_log_trace(client->log, "inet", "ensure_client_is_connected");
   }
 
   return success;
@@ -463,7 +463,7 @@ ih_core_message_t *receive_message(ih_net_client_system_t *client)
       if (ih_net_post_system_is_socket_closed(client->post)) {
         client->server_socket_closed = ih_core_bool_true;
         if (!handle_disconnect(client)) {
-          ih_core_log_trace(client->log, "xnet", "handle_disconnect");
+          ih_core_log_trace(client->log, "inet", "handle_disconnect");
         }
       }
     }
@@ -471,7 +471,7 @@ ih_core_message_t *receive_message(ih_net_client_system_t *client)
 
   } else {
     message = NULL;
-    ih_core_log_trace(client->log, "xnet", "ensure_client_is_connected");
+    ih_core_log_trace(client->log, "inet", "ensure_client_is_connected");
   }
 
   return message;
