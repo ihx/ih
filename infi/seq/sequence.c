@@ -78,7 +78,35 @@ ih_core_bool_t ih_infi_seq_sequence_get_data_from_nasdaq
 ih_core_bool_t ih_infi_seq_sequence_get_data_from_random
 (ih_infi_seq_sequence_t *sequence)
 {
-  return ih_core_bool_false;
+  assert(sequence);
+  ih_infi_seq_point_t *point;
+  unsigned long timestamp;
+  char value[32];
+  unsigned long i;
+  double value_double;
+  ih_core_bool_t success = ih_core_bool_true;
+
+  ih_case_list_clear(sequence->points);
+  for (i = 0; i < 256; i++) {
+    timestamp = i;
+    value_double = rand() / rand();
+    sprintf(value, "%f", value_double);
+    point = ih_infi_seq_point_create(timestamp, value);
+    if (point) {
+      if (!ih_case_list_add_last(sequence->points, point)) {
+        ih_core_trace("ih_case_list_add_last");
+        ih_infi_seq_point_destroy(point);
+        success = ih_core_bool_false;
+        break;
+      }
+    } else {
+      ih_core_trace("ih_infi_seq_point_create");
+      success = ih_core_bool_false;
+      break;
+    }
+  }
+
+  return success;
 }
 
 ih_core_bool_t ih_infi_seq_sequence_get_data_from_yahoo
@@ -87,21 +115,83 @@ ih_core_bool_t ih_infi_seq_sequence_get_data_from_yahoo
   return ih_core_bool_false;
 }
 
-ih_case_list_t *ih_infi_seq_sequence_get_points_last_n
+ih_case_list_t *ih_infi_seq_sequence_get_points_last_n_copy
 (ih_infi_seq_sequence_t *sequence, unsigned long n)
 {
-  return NULL;
+  assert(sequence);
+  unsigned long points_size = ih_case_list_get_size(sequence->points);
+  unsigned long start_point;
+  unsigned long i;
+  ih_case_list_t *points;
+  ih_infi_seq_point_t *point;
+  ih_infi_seq_point_t *point_copy;
+
+  points = ih_case_list_create(ih_infi_seq_point_compare,
+      ih_infi_seq_point_copy, ih_infi_seq_point_destroy);
+  if (points) {
+    if (points_size >= n) {
+      start_point = points_size - n;
+    } else {
+      start_point = 0;
+    }
+    for (i = start_point; i < points_size; i++) {
+      point = ih_case_list_find_at(sequence->points, i);
+      assert(point);
+      point_copy = ih_infi_seq_point_copy(point);
+      if (point_copy) {
+        if (!ih_case_list_add_last(points, point_copy)) {
+          ih_core_trace("ih_case_list_add_last");
+          ih_infi_seq_point_destroy(point_copy);
+        }
+      } else {
+        ih_core_trace("ih_infi_seq_point_copy");
+      }
+    }
+  } else {
+    ih_core_trace("ih_case_list_create");
+  }
+
+  return points;
 }
 
-ih_case_list_t *ih_infi_seq_sequence_get_points_since_timestamp
+ih_case_list_t *ih_infi_seq_sequence_get_points_since_timestamp_copy
 (ih_infi_seq_sequence_t *sequence, unsigned long timestamp)
 {
-  return NULL;
-}
+  assert(sequence);
+  unsigned long points_size = ih_case_list_get_size(sequence->points);
+  unsigned long i;
+  unsigned long start_point;
+  ih_case_list_t *points;
+  ih_infi_seq_point_t *point;
+  ih_infi_seq_point_t *point_copy;
 
-/*
-char *ih_infi_seq_sequence_get_subject(ih_infi_seq_sequence_t *sequence)
-{
-  return sequence->subject;
+  points = ih_case_list_create(ih_infi_seq_point_compare,
+      ih_infi_seq_point_copy, ih_infi_seq_point_destroy);
+  if (points) {
+    start_point = 0;
+    ih_case_list_iterate_start(sequence->points);
+    while ((point = ih_case_list_iterate_next(sequence->points))) {
+      if (ih_infi_seq_point_get_timestamp(point) >= timestamp) {
+        break;
+      }
+      start_point++;
+    }
+    for (i = start_point; i < points_size; i++) {
+      point = ih_case_list_find_at(sequence->points, i);
+      assert(point);
+      point_copy = ih_infi_seq_point_copy(point);
+      if (point_copy) {
+        if (!ih_case_list_add_last(points, point_copy)) {
+          ih_core_trace("ih_case_list_add_last");
+          ih_infi_seq_point_destroy(point_copy);
+        }
+      } else {
+        ih_core_trace("ih_infi_seq_point_copy");
+      }
+    }
+  } else {
+    ih_core_trace("ih_case_list_create");
+  }
+
+  return points;
 }
-*/

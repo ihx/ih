@@ -58,6 +58,7 @@ ih_infi_seq_system_t *ih_infi_seq_system_create(ih_core_log_t *log)
 
 void ih_infi_seq_system_destroy(ih_infi_seq_system_t *system)
 {
+  ih_case_set_destroy(system->sequences);
   free(system);
 }
 

@@ -13,17 +13,20 @@ typedef enum ih_core_message_encoding_t ih_core_message_encoding_t;
 typedef ih_core_bool_t ih_core_message_add_to_message_f(void *object,
     ih_core_message_t *message);
 
-typedef void *ih_core_message_create_from_message_f(ih_core_message_t *message);
+typedef void *ih_core_message_create_from_message_f
+(ih_core_message_t *message);
 
-ih_core_bool_t ih_core_message_add_bool(ih_core_message_t *message, void *object);
+ih_core_bool_t ih_core_message_add_bool(ih_core_message_t *message,
+    void *object);
 
 ih_core_bool_t ih_core_message_add_double(ih_core_message_t *message,
     void *object);
 
-ih_core_bool_t ih_core_message_add_long(ih_core_message_t *message, void *object);
+ih_core_bool_t ih_core_message_add_long(ih_core_message_t *message,
+    void *object);
 
 ih_core_bool_t ih_core_message_add_short(ih_core_message_t *message,
-    void *object);
+void *object);
 
 ih_core_bool_t ih_core_message_add_string(ih_core_message_t *message,
     void *object);

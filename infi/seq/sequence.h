@@ -14,7 +14,8 @@ ih_infi_seq_sequence_t *ih_infi_seq_sequence_create(char *subject,
 
 void ih_infi_seq_sequence_destroy(ih_infi_seq_sequence_t *sequence);
 
-ih_core_bool_t ih_infi_seq_sequence_get_data(ih_infi_seq_sequence_t *sequence);
+ih_core_bool_t ih_infi_seq_sequence_get_data
+(ih_infi_seq_sequence_t *sequence);
 
 ih_core_bool_t ih_infi_seq_sequence_get_data_from_nasdaq
 (ih_infi_seq_sequence_t *sequence);
@@ -25,12 +26,10 @@ ih_core_bool_t ih_infi_seq_sequence_get_data_from_random
 ih_core_bool_t ih_infi_seq_sequence_get_data_from_yahoo
 (ih_infi_seq_sequence_t *sequence);
 
-ih_case_list_t *ih_infi_seq_sequence_get_points_last_n
+ih_case_list_t *ih_infi_seq_sequence_get_points_last_n_copy
 (ih_infi_seq_sequence_t *sequence, unsigned long n);
 
-ih_case_list_t *ih_infi_seq_sequence_get_points_since_timestamp
+ih_case_list_t *ih_infi_seq_sequence_get_points_since_timestamp_copy
 (ih_infi_seq_sequence_t *sequence, unsigned long timestamp);
-
-/*  char *ih_infi_seq_sequence_get_subject(ih_infi_seq_sequence_t *sequence);  */
 
 #endif

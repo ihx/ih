@@ -12,6 +12,8 @@ Formatting
         do-more-stuff();
     }
     unlock();
+  + when breaking into multiple lines: in general, try to get as much on one
+    line as possible
 
 Structure
   + in a function, use three blocks sepetated by double newlines
@@ -51,13 +53,14 @@ Naming
       + uuid_get_as_string()
     + a create() function returns a value or pointer that the caller manages
       + string_create_from_uuid()
-  + in a container, "replace" means remove, then add; or find, remove, then add
+  + in a container, "replace" means remove, then add; or find, remove, then
+    add
   + use "_size" to name a variable/function that indicates the size of
     something including any terminator characters; use "_length" to name a
     variable/function that indicates the number of characters in a string,
     excluding the terminator character
-  + if there's one main executable in a system named xyz, name the executable's
-    main program source xyz.c
+  + if there's one main executable in a system named xyz, name the
+    executable's main program source xyz.c
   + name a system's central logical module "system" (with system.h/system.c/
     system.test.c)
 
@@ -73,8 +76,8 @@ Logic
         precondition :: like, it's returning a pointer to, or copy of,
         something that is already guaranteed to be there
       + a cf_x_core_map_find() where a precondition guarantees that that item
-        is there...like as the result of an sql query, where you've checked the
-        return value of the query() function
+        is there...like as the result of an sql query, where you've checked
+        the return value of the query() function
     + we're not testing pthread_mutex_[un]lock() right now...
   + don't initialize things until/unless you need to
   + don't use the const keyword
