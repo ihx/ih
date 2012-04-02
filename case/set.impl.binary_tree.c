@@ -350,12 +350,12 @@ unsigned long ih_case_set_get_size(ih_case_set_t *set)
 void *ih_case_set_iterate_next(ih_case_set_t *set)
 {
   assert(set);
-  void *neih_object;
+  void *next_object;
   set_object_t *successor;
 
   if (set->iterator) {
     if (set->iterate_first) {
-      neih_object = set->iterator->object;
+      next_object = set->iterator->object;
       set->iterate_first = ih_core_bool_false;
     } else {
       if (set->iterate_remove) {
@@ -367,16 +367,16 @@ void *ih_case_set_iterate_next(ih_case_set_t *set)
         set->iterator = _x_case_set_find_next(set, set->iterator);
       }
       if (set->iterator) {
-        neih_object = set->iterator->object;
+        next_object = set->iterator->object;
       } else {
-        neih_object = NULL;
+        next_object = NULL;
       }
     }
   } else {
-    neih_object = NULL;
+    next_object = NULL;
   }
 
-  return neih_object;
+  return next_object;
 }
 
 void ih_case_set_iterate_remove(ih_case_set_t *set)

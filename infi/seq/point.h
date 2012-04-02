@@ -8,7 +8,8 @@ int ih_infi_seq_point_compare(void *point_a_object, void *point_b_object);
 
 void *ih_infi_seq_point_copy(void *point_object);
 
-ih_infi_seq_point_t *ih_infi_seq_point_create(unsigned long timestamp, char *value);
+ih_infi_seq_point_t *ih_infi_seq_point_create(unsigned long timestamp,
+    char *value);
 
 void ih_infi_seq_point_destroy(void *point_object);
 

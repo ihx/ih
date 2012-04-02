@@ -442,11 +442,11 @@ unsigned long ih_case_array_get_size(ih_case_array_t *array)
 void *ih_case_array_iterate_next(ih_case_array_t *array)
 {
   assert(array);
-  void *neih_object;
+  void *next_object;
 
   if (array->iterator < array->array_size) {
     if (array->iterate_first) {
-      neih_object = *(array->array + array->iterator);
+      next_object = *(array->array + array->iterator);
       array->iterate_first = ih_core_bool_false;
     } else {
       if (array->iterate_remove) {
@@ -457,16 +457,16 @@ void *ih_case_array_iterate_next(ih_case_array_t *array)
         array->iterator++;
       }
       if (array->iterator < array->array_size) {
-        neih_object = *(array->array + array->iterator);
+        next_object = *(array->array + array->iterator);
       } else {
-        neih_object = NULL;
+        next_object = NULL;
       }
     }
   } else {
-    neih_object = NULL;
+    next_object = NULL;
   }
 
-  return neih_object;
+  return next_object;
 }
 
 void ih_case_array_iterate_remove(ih_case_array_t *array)

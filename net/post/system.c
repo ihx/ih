@@ -67,9 +67,9 @@ static ih_core_bool_t receive_messages_body(ih_net_post_system_t *post);
 
 static ih_core_bool_t receive_messages_header(ih_net_post_system_t *post);
 
-static void reset_for_neih_receive(ih_net_post_system_t *post);
+static void reset_for_next_receive(ih_net_post_system_t *post);
 
-static void reset_for_neih_send(ih_net_post_system_t *post);
+static void reset_for_next_send(ih_net_post_system_t *post);
 
 static void send_messages_get_new_message(ih_net_post_system_t *post);
 
@@ -352,7 +352,7 @@ void ih_net_post_system_receive_messages(void *post_object)
   }
   if (post->in_buffer_have_complete_header) {
     if (receive_messages_body(post)) {
-      reset_for_neih_receive(post);
+      reset_for_next_receive(post);
     }
   }
 }
@@ -384,7 +384,7 @@ void ih_net_post_system_send_messages(void *post_object)
   }
   if (post->currently_sending_out_buffer) {
     if (send_messages_send_current_message(post)) {
-      reset_for_neih_send(post);
+      reset_for_next_send(post);
     }
   }
 }
@@ -560,7 +560,7 @@ ih_core_bool_t receive_messages_header(ih_net_post_system_t *post)
   return received_a_header;
 }
 
-void reset_for_neih_receive(ih_net_post_system_t *post)
+void reset_for_next_receive(ih_net_post_system_t *post)
 {
   free(post->in_buffer);
   post->in_buffer = NULL;
@@ -568,7 +568,7 @@ void reset_for_neih_receive(ih_net_post_system_t *post)
   post->in_buffer_receive_position = 0;
 }
 
-void reset_for_neih_send(ih_net_post_system_t *post)
+void reset_for_next_send(ih_net_post_system_t *post)
 {
   free(post->out_buffer);
   post->out_buffer = NULL;

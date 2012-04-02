@@ -75,7 +75,14 @@ ih_core_bool_t ih_infi_seq_sequence_get_data_from_nasdaq
   return ih_core_bool_false;
 }
 
-ih_core_bool_t ih_infi_seq_sequence_get_data_from_yahoo(ih_infi_seq_sequence_t *sequence)
+ih_core_bool_t ih_infi_seq_sequence_get_data_from_random
+(ih_infi_seq_sequence_t *sequence)
+{
+  return ih_core_bool_false;
+}
+
+ih_core_bool_t ih_infi_seq_sequence_get_data_from_yahoo
+(ih_infi_seq_sequence_t *sequence)
 {
   return ih_core_bool_false;
 }

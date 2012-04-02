@@ -255,12 +255,12 @@ void *ih_case_shardset_iterate_next
 {
   assert(shardset);
   ih_case_set_t *set;
-  void *neih_object;
+  void *next_object;
 
   if (shardset->iterator) {
     if (shardset->iterate_first) {
       shardset->iterate_first = ih_core_bool_false;
-      neih_object = shardset->iterator;
+      next_object = shardset->iterator;
     } else {
       set = shardset->shards[shardset->iterator_shard];
       if (shardset->iterate_remove) {
@@ -268,10 +268,10 @@ void *ih_case_shardset_iterate_next
         shardset->iterate_remove = ih_core_bool_false;
       }
       shardset->iterator = ih_case_set_iterate_next(set);
-      neih_object = shardset->iterator;
+      next_object = shardset->iterator;
     }
   } else {
-    neih_object = NULL;
+    next_object = NULL;
   }
 
   /*
@@ -290,13 +290,13 @@ void *ih_case_shardset_iterate_next
       set = shardset->shards[shardset->iterator_shard];
       ih_case_set_iterate_start(set);
       shardset->iterator = ih_case_set_iterate_next(set);
-      neih_object = shardset->iterator;
+      next_object = shardset->iterator;
     } else {
       break;
     }
   }
 
-  return neih_object;
+  return next_object;
 }
 
 void ih_case_shardset_iterate_remove(ih_case_shardset_t *shardset)

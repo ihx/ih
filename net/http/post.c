@@ -74,9 +74,9 @@ static ih_core_bool_t put_received_message_in_inbox
 
 static ih_core_bool_t receive_messages(ih_net_http_post_t *http_post);
 
-static void reset_for_neih_receive(ih_net_http_post_t *http_post);
+static void reset_for_next_receive(ih_net_http_post_t *http_post);
 
-static void reset_for_neih_send(ih_net_http_post_t *http_post);
+static void reset_for_next_send(ih_net_http_post_t *http_post);
 
 static void send_messages_get_new_message(ih_net_http_post_t *http_post);
 
@@ -460,7 +460,7 @@ void ih_net_http_post_receive_messages(void *http_post_object)
   http_post->last_receive_activity_time = time(NULL);
 
   if (receive_messages(http_post)) {
-    reset_for_neih_receive(http_post);
+    reset_for_next_receive(http_post);
   }
 }
 
@@ -491,7 +491,7 @@ void ih_net_http_post_send_messages(void *http_post_object)
   }
   if (http_post->currently_sending_out_buffer) {
     if (send_messages_send_current_message(http_post)) {
-      reset_for_neih_send(http_post);
+      reset_for_next_send(http_post);
     }
   }
 }
@@ -773,7 +773,7 @@ ih_core_bool_t receive_messages(ih_net_http_post_t *http_post)
   return received_complete_message;
 }
 
-void reset_for_neih_receive(ih_net_http_post_t *http_post)
+void reset_for_next_receive(ih_net_http_post_t *http_post)
 {
   http_post->in_buffer_have_status_line = ih_core_bool_false;
   http_post->in_buffer_have_headers = ih_core_bool_false;
@@ -792,7 +792,7 @@ void reset_for_neih_receive(ih_net_http_post_t *http_post)
   }
 }
 
-void reset_for_neih_send(ih_net_http_post_t *http_post)
+void reset_for_next_send(ih_net_http_post_t *http_post)
 {
   free(http_post->out_buffer);
   http_post->out_buffer = NULL;

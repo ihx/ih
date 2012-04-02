@@ -565,12 +565,12 @@ void ih_case_list_init_iobject(ih_core_iobject_t *iobject)
 void *ih_case_list_iterate_next(ih_case_list_t *list)
 {
   assert(list);
-  void *neih_object;
+  void *next_object;
   list_object_t *successor;
 
   if (list->iterator) {
     if (list->iterate_first) {
-      neih_object = list->iterator->object;
+      next_object = list->iterator->object;
       list->iterate_first = ih_core_bool_false;
     } else {
       if (list->iterate_remove) {
@@ -582,16 +582,16 @@ void *ih_case_list_iterate_next(ih_case_list_t *list)
         list->iterator = list->iterator->after;
       }
       if (list->iterator) {
-        neih_object = list->iterator->object;
+        next_object = list->iterator->object;
       } else {
-        neih_object = NULL;
+        next_object = NULL;
       }
     }
   } else {
-    neih_object = NULL;
+    next_object = NULL;
   }
 
-  return neih_object;
+  return next_object;
 }
 
 void ih_case_list_iterate_remove(ih_case_list_t *list)

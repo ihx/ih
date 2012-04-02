@@ -17,7 +17,8 @@ void *ih_infi_seq_point_copy(void *point_object)
   return NULL;
 }
 
-ih_infi_seq_point_t *ih_infi_seq_point_create(unsigned long timestamp, char *value)
+ih_infi_seq_point_t *ih_infi_seq_point_create(unsigned long timestamp,
+    char *value)
 {
   assert(value);
   ih_infi_seq_point_t *point;
