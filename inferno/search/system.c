@@ -50,13 +50,6 @@ void ih_inferno_search_system_destroy(ih_inferno_search_system_t *system)
 ih_case_array_t *ih_inferno_search_system_get_solutions_copy
 (ih_inferno_search_system_t *system, unsigned short max_solution_count)
 {
-  assert(system);
-
-#ifdef IH_INFERNO_BUILD_DEMO
-  max_solution_count = ih_inferno_core_min(max_solution_count,
-      IH_INFERNO_CORE_DEMO_SOLUTION_COUNT);
-#endif
-
   return system->isearch.get_solutions_copy(system->search_object,
       max_solution_count);
 }

@@ -16,13 +16,6 @@ debugging = -g
 optimization = -O0
 mode_identifier = +
 warnings = -Wall -Werror
-ifeq ($(MAKECMDGOALS),demo)
-  build = -DIH_BUILD_DEMO
-  debugging = -DNDEBUG
-  optimization = -O3
-  mode_identifier = ~
-  warnings = -Wall -Werror
-endif
 ifeq ($(MAKECMDGOALS),release)
   build = -DIH_BUILD_RELEASE
   debugging = -DNDEBUG
@@ -63,8 +56,6 @@ programs = $(shell find . -name "*.bin.c" | sed 's/\(.*\)\..*/\1/')
 
 development: _all
 
-demo: clean _all
-
 release: clean _all
 
 stats:
@@ -98,7 +89,6 @@ help:
 	@echo "make                                                 ( make objects, programs )"
 	@echo "  + test                                              ( make tests, run tests )"
 	@echo "  + tests                                                        ( make tests )"
-	@echo "  + demo                                ( make objects, programs in demo mode )"
 	@echo "  + release                          ( make objects, programs in release mode )"
 	@echo "  + tags                                          ( make Emacs tags in .etags )"
 	@echo "  + clean                                                             ( clean )"
