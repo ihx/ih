@@ -1,19 +1,19 @@
 #include "ih/core/standard.h"
 #include "ih/core/tools.h"
-#include "ih/seq/point.h"
-#include "ih/seq/sequence.h"
+#include "ih/infi/seq/point.h"
+#include "ih/infi/seq/sequence.h"
 
-struct ih_seq_sequence_t {
+struct ih_infi_seq_sequence_t {
   char *subject;
-  ih_seq_sequence_get_data_f get_data;
+  ih_infi_seq_sequence_get_data_f get_data;
   ih_case_list_t *points;
 };
 
-ih_seq_sequence_t *ih_seq_sequence_create(char *subject,
-    ih_seq_sequence_get_data_f get_data)
+ih_infi_seq_sequence_t *ih_infi_seq_sequence_create(char *subject,
+    ih_infi_seq_sequence_get_data_f get_data)
 {
   assert(subject);
-  ih_seq_sequence_t *sequence;
+  ih_infi_seq_sequence_t *sequence;
   ih_core_bool_t so_far_so_good;
 
   sequence = malloc(sizeof *sequence);
@@ -31,8 +31,8 @@ ih_seq_sequence_t *ih_seq_sequence_create(char *subject,
   }
 
   if (so_far_so_good) {
-    sequence->points = ih_case_list_create(ih_seq_point_compare,
-        ih_seq_point_copy, ih_seq_point_destroy);
+    sequence->points = ih_case_list_create(ih_infi_seq_point_compare,
+        ih_infi_seq_point_copy, ih_infi_seq_point_destroy);
     if (!sequence->points) {
       so_far_so_good = ih_core_bool_false;
       ih_core_trace("ih_case_list_create");
@@ -53,7 +53,7 @@ ih_seq_sequence_t *ih_seq_sequence_create(char *subject,
   return sequence;
 }
 
-void ih_seq_sequence_destroy(ih_seq_sequence_t *sequence)
+void ih_infi_seq_sequence_destroy(ih_infi_seq_sequence_t *sequence)
 {
   assert(sequence);
   assert(sequence->subject);
@@ -64,36 +64,36 @@ void ih_seq_sequence_destroy(ih_seq_sequence_t *sequence)
   free(sequence);
 }
 
-ih_core_bool_t ih_seq_sequence_get_data(ih_seq_sequence_t *sequence)
+ih_core_bool_t ih_infi_seq_sequence_get_data(ih_infi_seq_sequence_t *sequence)
 {
   return sequence->get_data(sequence);
 }
 
-ih_core_bool_t ih_seq_sequence_get_data_from_nasdaq
-(ih_seq_sequence_t *sequence)
+ih_core_bool_t ih_infi_seq_sequence_get_data_from_nasdaq
+(ih_infi_seq_sequence_t *sequence)
 {
   return ih_core_bool_false;
 }
 
-ih_core_bool_t ih_seq_sequence_get_data_from_yahoo(ih_seq_sequence_t *sequence)
+ih_core_bool_t ih_infi_seq_sequence_get_data_from_yahoo(ih_infi_seq_sequence_t *sequence)
 {
   return ih_core_bool_false;
 }
 
-ih_case_list_t *ih_seq_sequence_get_points_last_n
-(ih_seq_sequence_t *sequence, unsigned long n)
+ih_case_list_t *ih_infi_seq_sequence_get_points_last_n
+(ih_infi_seq_sequence_t *sequence, unsigned long n)
 {
   return NULL;
 }
 
-ih_case_list_t *ih_seq_sequence_get_points_since_timestamp
-(ih_seq_sequence_t *sequence, unsigned long timestamp)
+ih_case_list_t *ih_infi_seq_sequence_get_points_since_timestamp
+(ih_infi_seq_sequence_t *sequence, unsigned long timestamp)
 {
   return NULL;
 }
 
 /*
-char *ih_seq_sequence_get_subject(ih_seq_sequence_t *sequence)
+char *ih_infi_seq_sequence_get_subject(ih_infi_seq_sequence_t *sequence)
 {
   return sequence->subject;
 }
