@@ -166,12 +166,12 @@ void ih_mg_system_destroy(ih_mg_system_t *system)
 
 uint32_t ih_mg_system_generate(ih_mg_system_t *system)
 {
-  unsigned short parent_a_index = choose_parent(system);
-  unsigned short parent_b_index = choose_parent(system);
-  unsigned short child_index = choose_child(system);
-  organism_t *parent_a = system->population + parent_a_index;
-  organism_t *parent_b = system->population + parent_b_index;
-  organism_t *child = system->population + child_index;
+  unsigned short parent_a_index;
+  unsigned short parent_b_index;
+  unsigned short child_index;
+  organism_t *parent_a;
+  organism_t *parent_b;
+  organism_t *child;
   unsigned short i;
   unsigned short cut_point;
   unsigned short j;
@@ -184,6 +184,12 @@ uint32_t ih_mg_system_generate(ih_mg_system_t *system)
         diverge(system);
       }
       for (j = 0; j < BURST_COUNT; j++) {
+        parent_a_index = choose_parent(system);
+        parent_b_index = choose_parent(system);
+        child_index = choose_child(system);
+        parent_a = system->population + parent_a_index;
+        parent_b = system->population + parent_b_index;
+        child = system->population + child_index;
         cut_point = random() % 32;
         for (i = 0; i < cut_point; i++) {
           ih_core_set_bit(&child->genome, i,
