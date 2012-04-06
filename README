@@ -13,6 +13,7 @@ What's inside
   + core                                                              (objects)
   + file                                                      (file read/write)
   + net                                              (client/server networking)
+  + mg                                                 (minigen genetic search)
   + sync                                               (thread synchronization)
 
 Set up environment

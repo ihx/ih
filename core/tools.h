@@ -22,6 +22,10 @@
 
 #define ih_core_get_bit(value, bit_index) ((value >> bit_index) & 1)
 
+#define ih_core_set_bit(value, bit_index, bit_value)  \
+  if (bit_value) { *value |= (1 << bit_index); }      \
+  else { *value &= ~(1 << bit_index); }
+
 #define ih_core_hash(string) ih_core_hash_djb2_xor(string)
 
 #define ih_core_implement() ih_core_trace("TODO: implement"); exit(19)
