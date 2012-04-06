@@ -206,9 +206,9 @@ uint32_t ih_mg_system_generate(ih_mg_system_t *system)
         }
         mating_count++;
       }
-      printf("+");
+      /*  printf("+");  */
     }
-    printf("\n");
+    /*  printf("\n");  */
     system->run_once = ih_core_bool_true;
   } else {
     ih_core_trace_exit("ih_mg_system_generate() has already been run for "
