@@ -3,6 +3,7 @@
 
 #define CONVERGENCE_SAMPLE_SIZE 16               /*  sqrt(POPULATION_SIZE)  */
 #define CONVERGENCE_THRESHOLD 0.2
+#define DIVERGE_MODULUS 2
 #define POPULATION_SIZE 256
 
 #define BURST_COUNT POPULATION_SIZE
@@ -21,12 +22,14 @@ struct ih_mg_system_t {
   organism_t population[POPULATION_SIZE];
   double fittest_fitness;
   unsigned short fittest_organism_index;
-  ih_core_bool_t run_once;
+  ih_core_bool_t first_generate;
+  void *context;
 };
 
 static unsigned short choose_child(ih_mg_system_t *system);
 static unsigned short choose_parent(ih_mg_system_t *system);
 static ih_core_bool_t converged(ih_mg_system_t *system);
+static void diverge(ih_mg_system_t *system);
 static double get_fitness(ih_mg_system_t *system,
     unsigned short organism_index);
 static void randomize_genome(uint32_t *genome);
@@ -95,13 +98,27 @@ static ih_core_bool_t converged(ih_mg_system_t *system)
   return converged;
 }
 
+void diverge(ih_mg_system_t *system)
+{
+  unsigned short i;
+  organism_t *organism;
+
+  for (i = 0; i < POPULATION_SIZE; i++) {
+    if (0 == (random() % DIVERGE_MODULUS)) {
+      organism = system->population + i;
+      randomize_genome(&organism->genome);
+    }
+  }
+}
+
 double get_fitness(ih_mg_system_t *system, unsigned short organism_index)
 {
   assert(system);
   organism_t *organism = system->population + organism_index;
 
   if (!organism->fitness_is_valid) {
-    organism->fitness = system->calculate_fitness(organism->genome);
+    organism->fitness = system->calculate_fitness(organism->genome,
+        system->context);
     if (organism->fitness > system->fittest_fitness) {
       system->fittest_fitness = organism->fitness;
       system->fittest_organism_index = organism_index;
@@ -112,7 +129,7 @@ double get_fitness(ih_mg_system_t *system, unsigned short organism_index)
 }
 
 ih_mg_system_t *ih_mg_system_create
-(ih_mg_calculate_fitness_f calculate_fitness)
+(ih_mg_calculate_fitness_f calculate_fitness, void *context)
 {
   assert(calculate_fitness);
   ih_mg_system_t *system;
@@ -129,7 +146,8 @@ ih_mg_system_t *ih_mg_system_create
     }
     system->fittest_fitness = 0.0;
     system->fittest_organism_index = 0;
-    system->run_once = ih_core_bool_false;
+    system->first_generate = ih_core_bool_true;
+    system->context = context;
     srandom(time(NULL));
   } else {
     ih_core_trace("malloc");
@@ -156,26 +174,29 @@ uint32_t ih_mg_system_generate(ih_mg_system_t *system)
   unsigned short j;
   unsigned long mating_count = 0;
 
-  if (!system->run_once) {
-    while (!converged(system) && (mating_count < MAX_MATINGS)) {
-      for (j = 0; j < BURST_COUNT; j++) {
-        cut_point = random() % 32;
-        for (i = 0; i < cut_point; i++) {
-          ih_core_set_bit(&child->genome, i,
-              ih_core_get_bit(parent_a->genome, i));
-        }
-        for (i = cut_point; i < 32; i++) {
-          ih_core_set_bit(&child->genome, i,
-              ih_core_get_bit(parent_b->genome, i));
-        }
-        if (0 == (random() % MUTATION_MODULUS)) {
-          ih_core_set_bit(&child->genome, random() % 32, random() % 2);
-        }
-        mating_count++;
-      }
-    }
-    system->run_once = ih_core_bool_true;
+  if (!system->first_generate) {
+    diverge(system);
   }
+  while (!converged(system) && (mating_count < MAX_MATINGS)) {
+    for (j = 0; j < BURST_COUNT; j++) {
+      cut_point = random() % 32;
+      for (i = 0; i < cut_point; i++) {
+        ih_core_set_bit(&child->genome, i,
+            ih_core_get_bit(parent_a->genome, i));
+      }
+      for (i = cut_point; i < 32; i++) {
+        ih_core_set_bit(&child->genome, i,
+            ih_core_get_bit(parent_b->genome, i));
+      }
+      if (0 == (random() % MUTATION_MODULUS)) {
+        ih_core_set_bit(&child->genome, random() % 32, random() % 2);
+      }
+      mating_count++;
+    }
+    /*  printf("+");  */
+  }
+  /*  printf("\n");  */
+  system->first_generate = ih_core_bool_false;
 
   return (system->population + system->fittest_organism_index)->genome;
 }
