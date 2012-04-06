@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
   unsigned long total = 0;
   ih_core_bool_t first_number = ih_core_bool_true;
 
-  minigen = ih_mg_system_create(calculate_fitness, numbers);
+  minigen = ih_mg_system_create(calculate_fitness, 0.1, numbers);
   if (!minigen) {
     ih_core_trace_exit("ih_mg_system_create");
   }

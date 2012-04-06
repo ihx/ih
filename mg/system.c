@@ -5,7 +5,6 @@
 #define CONVERGENCE_THRESHOLD 0.2
 #define DIVERGE_MODULUS 2
 #define POPULATION_SIZE 256
-#define REQUIRED_FITNESS 0.8
 
 #define BURST_COUNT POPULATION_SIZE
 #define MAX_MATINGS (POPULATION_SIZE * 1024)
@@ -23,6 +22,7 @@ struct ih_mg_system_t {
   organism_t population[POPULATION_SIZE];
   double fittest_fitness;
   unsigned short fittest_organism_index;
+  double required_fitness;
   void *context;
   ih_core_bool_t run_once;
 };
@@ -132,7 +132,8 @@ double get_fitness(ih_mg_system_t *system, unsigned short organism_index)
 }
 
 ih_mg_system_t *ih_mg_system_create
-(ih_mg_calculate_fitness_f calculate_fitness, void *context)
+(ih_mg_calculate_fitness_f calculate_fitness, double required_fitness,
+    void *context)
 {
   assert(calculate_fitness);
   ih_mg_system_t *system;
@@ -149,6 +150,7 @@ ih_mg_system_t *ih_mg_system_create
     }
     system->fittest_fitness = 0.0;
     system->fittest_organism_index = 0;
+    system->required_fitness = required_fitness;
     system->context = context;
     system->run_once = ih_core_bool_false;
     srandom(time(NULL));
@@ -178,7 +180,7 @@ uint32_t ih_mg_system_generate(ih_mg_system_t *system)
   unsigned long mating_count = 0;
 
   if (!system->run_once) {
-    while ((system->fittest_fitness < REQUIRED_FITNESS)
+    while ((system->fittest_fitness < system->required_fitness)
         && (mating_count < MAX_MATINGS)) {
       if (converged(system)) {
         diverge(system);
@@ -204,9 +206,9 @@ uint32_t ih_mg_system_generate(ih_mg_system_t *system)
         }
         mating_count++;
       }
-      /*  printf("+");  */
+      printf("+");
     }
-    /*  printf("\n");  */
+    printf("\n");
     system->run_once = ih_core_bool_true;
   } else {
     ih_core_trace_exit("ih_mg_system_generate() has already been run for "

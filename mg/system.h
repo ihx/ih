@@ -7,7 +7,8 @@ typedef struct ih_mg_system_t ih_mg_system_t;
 typedef double (*ih_mg_calculate_fitness_f)(uint32_t genome, void *context);
 
 ih_mg_system_t *ih_mg_system_create
-(ih_mg_calculate_fitness_f calculate_fitness, void *context);
+(ih_mg_calculate_fitness_f calculate_fitness, double required_fitness,
+    void *context);
 
 void ih_mg_system_destroy(ih_mg_system_t *system);
 
