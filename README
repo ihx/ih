@@ -20,7 +20,7 @@ What's inside
   + sync     ( thread synchronization )
 
 Set up environment
-  + point $IH to the directory containing this readme.txt file
+  + point $IH to the directory containing this README file
   + add $IH/bin to $PATH
 
 Install dependencies
