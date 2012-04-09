@@ -26,20 +26,13 @@ endif
 
 compiler = gcc
 libraries = -ljpeg -lm -lcurses -lpq -lpthread
-library_paths = -L. -L$(IH_LIBRARY_PATH)
-ifeq ($(os),Darwin)
-  libraries += -luuid
-  library_paths += -L/opt/local/lib
-  compiler = /opt/local/bin/gcc-mp-4.6
-endif
+library_paths = -L. -L$(IH_LIBRARY_PATH) -L/usr/lib -L/usr/local/lib
 ifeq ($(os),Linux)
   libraries += -luuid
-  library_paths += -L/usr/local/lib -L/usr/lib
 endif
 ifeq ($(os),NetBSD)
-  library_paths += -L/usr/local/lib -L/usr/lib
 endif
-include_paths = -I/usr/local/include -I$(IH)/.. -I$(IH_INCLUDE_PATH)
+include_paths = -I$(IH)/.. -I$(IH_INCLUDE_PATH)
 link_options = -ansi $(build) $(platform) $(debugging) $(optimization) $(warnings) $(include_paths) -D_GNU_SOURCE $(library_paths) $(libraries)
 compile_options = -ansi $(build) $(platform) $(debugging) $(optimization) $(warnings) $(include_paths) -D_GNU_SOURCE
 
