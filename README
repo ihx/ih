@@ -14,7 +14,7 @@ What's inside
   + core     ( objects and basic tools )
   + file     ( file read/write )
   + hcx      ( cellular/genetic tools )
-  + inferno  ( cultural-genetic search and the archetype algorithm )
+  + inferno  ( cultural-genetic search :: the cor3, bios, and eos algorithms )
   + mg       ( minigen genetic search :: a GA in about 200 lines of code )
   + net      ( client/server networking )
   + sync     ( thread synchronization )
