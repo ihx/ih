@@ -21,7 +21,6 @@ ifeq ($(MAKECMDGOALS),release)
   debugging = -DNDEBUG
   optimization = -O3
   mode_identifier = \#
-  warnings = -Wall -Werror
 endif
 
 compiler = gcc
