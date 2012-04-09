@@ -1,36 +1,36 @@
-inhesion is a code library written in ansi c.  It includes containers and
-networking.  It includes classification and search algorithms of the
-cultural/genetic style.
+inhesion is a library for genetic and cellular programming, written in ANSI C.
 
-inhesion is tested on Linux and NetBSD.  Other platforms will probably work.
+We test on Linux and NetBSD.  Other platforms will probably work.
 
 inhesion is BSD licensed.  Support contracts are available for corporate
 customers (contact clownfysh@gmail.com).  Other than that, your best bet is to
 read the code!
 
 What's inside
-  + bin                                        (environment, makefile, scripts)
-  + case                                                           (containers)
-  + config                                                (config file reading)
-  + core                                                              (objects)
-  + file                                                      (file read/write)
-  + net                                              (client/server networking)
-  + mg                                                 (minigen genetic search)
-  + sync                                               (thread synchronization)
+  + bin     ( environment, makefile, scripts )
+  + ca      ( cellular automata )
+  + case    ( containers )
+  + config  ( config file reading )
+  + core    ( objects )
+  + file    ( file read/write )
+  + hcx     ( cellular/genetic tools )
+  + mg      ( minigen genetic search )
+  + net     ( client/server networking )
+  + sync    ( thread synchronization )
 
 Set up environment
   + point $IH to the directory containing this readme.txt file
   + add $IH/bin to $PATH
 
 Install dependencies
-  + C standard headers                                       ( stddef.h, etc. )
-    + point $IH_INCLUDE_PATH to them    ( somewhere like /usr/lib/gcc/include )
-  + an ANSI C compiler                  ( http://en.wikipedia.org/wiki/ANSI_C )
-  + POSIX Threads                ( http://en.wikipedia.org/wiki/POSIX_Threads )
-  + libjpeg                                             ( http://www.ijg.org/ )
-  + curses
-  + postgresql
-  + makedepend
+  + C standard headers       ( stddef.h, etc. )
+    + set $IH_INCLUDE_PATHS  ( like -I/usr/lib/gcc/include -I/xyz )
+  + an ANSI C compiler       ( http://en.wikipedia.org/wiki/ANSI_C )
+  + POSIX Threads            ( http://en.wikipedia.org/wiki/POSIX_Threads )
+  + libjpeg                  ( http://www.ijg.org/ )
+  + curses                   ( .. )
+  + postgresql               ( http://www.postgresql.org/ )
+  + makedepend               ( .. )
 
 Make
   + "cd $IH"
@@ -41,9 +41,9 @@ If you want to commit back to the project
   + "make test", "make release" and "make clean" before committing
 
 Contact
-  + www                                                ( http://inhesion.com/ )
-  + about                                         ( http://inhesion.com/about )
-  + source                                       ( http://inhesion.com/source )
-  + issues                                       ( http://inhesion.com/issues )
-  + wiki                                           ( http://inhesion.com/wiki )
-  + email                                               ( clownfysh@gmail.com )
+  + www     ( http://inhesion.com/ )
+  + about   ( http://inhesion.com/about )
+  + source  ( http://inhesion.com/source )
+  + issues  ( http://inhesion.com/issues )
+  + wiki    ( http://inhesion.com/wiki )
+  + email   ( clownfysh@gmail.com )
