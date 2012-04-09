@@ -7,16 +7,17 @@ customers (contact clownfysh@gmail.com).  Other than that, your best bet is to
 read the code!
 
 What's inside
-  + bin     ( environment, makefile, scripts )
-  + ca      ( cellular automata )
-  + case    ( containers :: array, list, set, .. )
-  + config  ( config file reading and command-line options )
-  + core    ( objects and basic tools )
-  + file    ( file read/write )
-  + hcx     ( cellular/genetic tools )
-  + mg      ( minigen genetic search :: a GA in about 200 lines of code )
-  + net     ( client/server networking )
-  + sync    ( thread synchronization )
+  + bin      ( environment, makefile, scripts )
+  + ca       ( cellular automata )
+  + case     ( containers :: array, list, set, .. )
+  + config   ( config file reading and command-line options )
+  + core     ( objects and basic tools )
+  + file     ( file read/write )
+  + hcx      ( cellular/genetic tools )
+  + inferno  ( cultural-genetic search and the archetype algorithm)
+  + mg       ( minigen genetic search :: a GA in about 200 lines of code )
+  + net      ( client/server networking )
+  + sync     ( thread synchronization )
 
 Set up environment
   + point $IH to the directory containing this readme.txt file
