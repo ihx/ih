@@ -215,20 +215,19 @@ void *ih_core_nameobject_get_object(ih_core_nameobject_t *nameobject)
   return nameobject->object;
 }
 
+unsigned long ih_core_nameobject_hash(void *nameobject_object)
+{
+  assert(nameobject_object);
+  ih_core_nameobject_t *nameobject = nameobject_object;
+  return ih_core_string_hash(nameobject->name);
+}
+
 void ih_core_nameobject_init_iobject(ih_core_iobject_t *iobject)
 {
   ih_core_iobject_init(iobject, ih_core_nameobject_compare,
       ih_core_nameobject_compare_equal, ih_core_nameobject_copy,
       ih_core_nameobject_destroy, ih_core_nameobject_get_as_string,
-      ih_core_nameobject_mod);
-}
-
-unsigned long ih_core_nameobject_mod(void *nameobject_object,
-    unsigned long divisor)
-{
-  assert(nameobject_object);
-  ih_core_nameobject_t *nameobject = nameobject_object;
-  return ih_core_string_mod(nameobject->name, divisor);
+      ih_core_nameobject_hash);
 }
 
 void ih_core_nameobject_print(void *nameobject_object)

@@ -417,6 +417,13 @@ void ih_net_http_post_get_stats(void *http_post_object,
     = http_post->stats.messages_not_sent_due_to_socket_send_failures;
 }
 
+unsigned long ih_net_http_post_hash(void *post_object)
+{
+  assert(post_object);
+  ih_net_http_post_t *post = post_object;
+  return post->socket;
+}
+
 ih_core_bool_t ih_net_http_post_is_socket_closed(void *http_post_object)
 {
   assert(http_post_object);
@@ -425,13 +432,6 @@ ih_core_bool_t ih_net_http_post_is_socket_closed(void *http_post_object)
   http_post = http_post_object;
 
   return http_post->socket_closed;
-}
-
-unsigned long ih_net_http_post_mod(void *post_object, unsigned long divisor)
-{
-  assert(post_object);
-  ih_net_http_post_t *post = post_object;
-  return post->socket % divisor;
 }
 
 void *ih_net_http_post_receive_message(void *http_post_object)

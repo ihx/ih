@@ -1,6 +1,8 @@
 #include "ih/case/array.h"
-#include "ih/core/basic/long.h"
 #include "ih/case/set.h"
+#include "ih/core/standard.h"
+#include "ih/core/tools.h"
+#include "ih/core/basic/long.h"
 
 #if defined IH_CASE_SET_IMPL_BINARY_TREE
 #include "ih/case/set.impl.binary_tree.c"

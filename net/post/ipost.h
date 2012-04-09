@@ -52,7 +52,7 @@ struct ih_net_post_ipost_t {
   ih_net_post_ipost_send_messages_f send_messages;
   ih_net_post_ipost_socket_closed_f socket_closed;
 
-  ih_core_object_mod_f mod;
+  ih_core_object_hash_f hash;
   ih_core_object_compare_equal_f compare_equal;
 };
 typedef struct ih_net_post_ipost_t ih_net_post_ipost_t;
@@ -74,7 +74,7 @@ void ih_net_post_ipost_init(ih_net_post_ipost_t *ipost,
     ih_net_post_ipost_send_messages_f send_messages,
     ih_net_post_ipost_socket_closed_f socket_closed,
 
-    ih_core_object_mod_f mod,
+    ih_core_object_hash_f hash,
     ih_core_object_compare_equal_f compare_equal);
 
 #endif

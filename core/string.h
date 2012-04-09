@@ -26,8 +26,6 @@ unsigned long ih_core_string_hash(void *string_object);
 
 void ih_core_string_init_iobject(ih_core_iobject_t *iobject);
 
-unsigned long ih_core_string_mod(void *string_object, unsigned long divisor);
-
 void ih_core_string_print(void *string_object);
 
 ih_core_string_t ih_core_string_substring(ih_core_string_t string,

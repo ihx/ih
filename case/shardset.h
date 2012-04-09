@@ -19,7 +19,7 @@ void ih_case_shardset_clear(ih_case_shardset_t *shardset);
 ih_case_shardset_t *ih_case_shardset_create(ih_core_object_compare_f compare,
     ih_core_object_compare_equal_f compare_equal, ih_core_object_copy_f copy,
     ih_core_object_destroy_f destroy, ih_core_object_hash_f hash_object,
-    ih_core_object_mod_f mod, unsigned short shard_count);
+    ih_core_object_hash_f hash, unsigned short shard_count);
 
 void ih_case_shardset_destroy(ih_case_shardset_t *shardset);
 

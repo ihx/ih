@@ -178,6 +178,13 @@ ih_core_iobject_t *ih_core_pair_get_right_iobject(ih_core_pair_t *pair)
   return pair->right_iobject;
 }
 
+unsigned long ih_core_pair_hash_left(void *pair_object)
+{
+  assert(pair_object);
+  ih_core_pair_t *pair = pair_object;
+  return pair->left_iobject->hash(pair->left);
+}
+
 void ih_core_pair_init_iobject(ih_core_iobject_t *iobject)
 {
   assert(iobject);
@@ -186,11 +193,4 @@ void ih_core_pair_init_iobject(ih_core_iobject_t *iobject)
   iobject->copy = ih_core_pair_copy;
   iobject->destroy = ih_core_pair_destroy;
   iobject->get_as_string = ih_core_pair_get_as_string;
-}
-
-unsigned long ih_core_pair_mod_left(void *pair_object, unsigned long divisor)
-{
-  assert(pair_object);
-  ih_core_pair_t *pair = pair_object;
-  return pair->left_iobject->mod(pair->left, divisor);
 }

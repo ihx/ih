@@ -20,10 +20,9 @@ ih_core_bool_t ih_core_basic_long_compare_equal(void *long_a_object,
 
 char *ih_core_basic_long_get_as_string(void *long_object);
 
-void ih_core_basic_long_init_iobject(ih_core_iobject_t *iobject);
+unsigned long ih_core_basic_long_hash(void *long_object);
 
-unsigned long ih_core_basic_long_mod(void *long_object,
-    unsigned long divisor);
+void ih_core_basic_long_init_iobject(ih_core_iobject_t *iobject);
 
 void ih_core_basic_long_print(void *long_object);
 

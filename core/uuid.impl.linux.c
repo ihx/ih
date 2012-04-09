@@ -104,7 +104,7 @@ char *ih_core_uuid_get_string(void *uuid_object)
   return uuid->string;
 }
 
-unsigned long ih_core_uuid_mod(void *uuid_object, unsigned long divisor)
+unsigned long ih_core_uuid_hash(void *uuid_object, unsigned long divisor)
 {
   assert(uuid_object);
   unsigned char *uuid = uuid_object;

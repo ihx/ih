@@ -73,6 +73,13 @@ char *ih_core_basic_unsigned_long_get_as_string(void *unsigned_long_object)
   return string;
 }
 
+unsigned long ih_core_basic_unsigned_long_hash(void *unsigned_long_object)
+{
+  assert(unsigned_long_object);
+  unsigned long *unsigned_long = unsigned_long_object;
+  return *unsigned_long;
+}
+
 void ih_core_basic_unsigned_long_init_iobject(ih_core_iobject_t *iobject)
 {
   assert(iobject);
@@ -81,13 +88,5 @@ void ih_core_basic_unsigned_long_init_iobject(ih_core_iobject_t *iobject)
       ih_core_basic_unsigned_long_copy,
       ih_core_basic_unsigned_long_destroy,
       ih_core_basic_unsigned_long_get_as_string,
-      ih_core_basic_unsigned_long_mod);
-}
-
-unsigned long ih_core_basic_unsigned_long_mod(void *unsigned_long_object,
-    unsigned long divisor)
-{
-  assert(unsigned_long_object);
-  unsigned long *unsigned_long = unsigned_long_object;
-  return *unsigned_long % divisor;
+      ih_core_basic_unsigned_long_hash);
 }

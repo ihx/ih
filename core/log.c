@@ -78,7 +78,7 @@ ih_core_log_t *ih_core_log_create(FILE *file)
         ih_core_basic_unsigned_long_compare_equal,
         IH_CORE_OBJECT_NO_COPY_F, IH_CORE_OBJECT_NO_DESTROY_F,
         IH_CORE_OBJECT_NO_GET_AS_STRING_F,
-        ih_core_basic_unsigned_long_mod);
+        ih_core_basic_unsigned_long_hash);
     log->files = ih_case_set_create(&log->files_iobject);
     if (log->files) {
       if (file) {

@@ -50,7 +50,8 @@ ih_core_bool_t ih_core_stop_requested;
 
 unsigned long ih_core_get_microseconds();
 
-ih_core_bool_t ih_core_get_current_time_string(ih_core_time_string_t time_string);
+ih_core_bool_t ih_core_get_current_time_string
+(ih_core_time_string_t time_string);
 
 void ih_core_do_nothing();
 

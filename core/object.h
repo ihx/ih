@@ -8,7 +8,7 @@
 #define IH_CORE_OBJECT_NO_COPY_F NULL
 #define IH_CORE_OBJECT_NO_DESTROY_F NULL
 #define IH_CORE_OBJECT_NO_GET_AS_STRING_F NULL
-#define IH_CORE_OBJECT_NO_MOD_F NULL
+#define IH_CORE_OBJECT_NO_HASH_F NULL
 
 typedef int (*ih_core_object_compare_f)(void *object_a, void *object_b);
 
@@ -31,13 +31,10 @@ typedef char *(*ih_core_object_get_as_string_f)(void *object);
 
 typedef void *(*ih_core_object_get_object_f)(void *object);
 
-typedef unsigned long (*ih_core_object_hash_f)(void *object);
-
-typedef unsigned long (*ih_core_object_mod_f)(void *object,
-    unsigned long divisor);
-
 void ih_core_object_print(void *object,
     ih_core_object_get_as_string_f get_as_string);
+
+typedef unsigned long (*ih_core_object_hash_f)(void *object);
 
 typedef void (*ih_core_object_set_object_f)(void *object, void *value);
 

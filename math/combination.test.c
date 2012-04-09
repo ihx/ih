@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
   ih_core_iobject_init(&set_iobject, ih_core_string_compare,
       ih_core_string_compare_equal, ih_core_string_copy,
       IH_CORE_OBJECT_NO_DESTROY_F, ih_core_string_get_as_string,
-      ih_core_string_mod);
+      ih_core_string_hash);
   set = ih_case_set_create(&set_iobject);
   if (!set) {
     ih_core_trace_exit("x_case_set_create");

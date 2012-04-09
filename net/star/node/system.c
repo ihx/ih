@@ -48,7 +48,7 @@ ih_net_star_node_system_t *ih_net_star_node_system_create
         ih_net_post_system_receive_message,
         ih_net_post_system_receive_messages,
         ih_net_post_system_send_message, ih_net_post_system_send_messages,
-        ih_net_post_system_is_socket_closed, ih_net_post_system_mod,
+        ih_net_post_system_is_socket_closed, ih_net_post_system_hash,
         ih_net_post_system_compare_equal);
     node->log = log;
     so_far_so_good = ih_core_bool_true;

@@ -74,29 +74,7 @@ void ih_core_string_init_iobject(ih_core_iobject_t *iobject)
   ih_core_iobject_init(iobject, ih_core_string_compare,
       ih_core_string_compare_equal, ih_core_string_copy,
       ih_core_string_destroy, ih_core_string_get_as_string,
-      ih_core_string_mod);
-}
-
-unsigned long ih_core_string_mod(void *string_object, unsigned long divisor)
-{
-  assert(string_object);
-  char *string = string_object;
-  unsigned long dividend = 0;
-  unsigned char i;
-  char c;
-  unsigned long place_value = 1;
-
-  for (i = 0; i < 4; i++) {
-    c = *(string + i);
-    if (c) {
-      dividend += (c * place_value);
-    } else {
-      break;
-    }
-    place_value *= 256;
-  }
-
-  return dividend % divisor;
+      ih_core_string_hash);
 }
 
 void ih_core_string_print(void *string_object)

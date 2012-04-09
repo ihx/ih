@@ -37,6 +37,10 @@ void ih_case_mbin_iterate_start(ih_case_mbin_t *mbin);
 
 void *ih_case_mbin_iterate_next(ih_case_mbin_t *mbin);
 
+void ih_case_mbin_lock(ih_case_mbin_t *mbin);
+
 ih_core_bool_t ih_case_mbin_remove(ih_case_mbin_t *mbin, void *decoy_object);
+
+void ih_case_mbin_unlock(ih_case_mbin_t *mbin);
 
 #endif

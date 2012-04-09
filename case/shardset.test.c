@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
   shardset = ih_case_shardset_create(ih_core_string_compare,
       ih_core_string_compare_equal, ih_core_string_copy,
       IH_CORE_OBJECT_NO_DESTROY_F, ih_core_string_hash,
-      ih_core_string_mod, SHARD_COUNT);
+      ih_core_string_hash, SHARD_COUNT);
   if (!shardset) {
     ih_core_trace_exit("x_case_shardset_create");
   }

@@ -933,7 +933,7 @@ ih_core_bool_t ih_net_server_system_create_client_posts
   ih_core_iobject_init(&server->client_posts_iobject, server->ipost->compare,
       server->ipost->compare_equal, IH_CORE_OBJECT_NO_COPY_F,
       server->ipost->destroy, IH_CORE_OBJECT_NO_GET_AS_STRING_F,
-      server->ipost->mod);
+      server->ipost->hash);
   server->client_posts = ih_case_set_create(&server->client_posts_iobject);
   if (server->client_posts) {
     success = ih_core_bool_true;

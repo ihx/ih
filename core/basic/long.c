@@ -81,20 +81,20 @@ char *ih_core_basic_long_get_as_string(void *long_object)
   return string;
 }
 
+unsigned long ih_core_basic_long_hash(void *long_object)
+{
+  assert(long_object);
+  unsigned long *l = long_object;
+  return *l;
+}
+
 void ih_core_basic_long_init_iobject(ih_core_iobject_t *iobject)
 {
   assert(iobject);
   ih_core_iobject_init(iobject, ih_core_basic_long_compare,
       ih_core_basic_long_compare_equal, ih_core_basic_long_copy,
       ih_core_basic_long_destroy, ih_core_basic_long_get_as_string,
-      ih_core_basic_long_mod);
-}
-
-unsigned long ih_core_basic_long_mod(void *long_object, unsigned long divisor)
-{
-  assert(long_object);
-  unsigned long *l = long_object;
-  return *l % divisor;
+      ih_core_basic_long_hash);
 }
 
 void ih_core_basic_long_print(void *long_object)

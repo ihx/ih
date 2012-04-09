@@ -15,10 +15,9 @@ void ih_core_basic_unsigned_long_destroy(void *unsigned_long_object);
 
 char *ih_core_basic_unsigned_long_get_as_string(void *unsigned_long_object);
 
+unsigned long ih_core_basic_unsigned_long_hash(void *unsigned_long_object);
+
 void ih_core_basic_unsigned_long_init_iobject
 (ih_core_iobject_t *iobject);
-
-unsigned long ih_core_basic_unsigned_long_mod(void *unsigned_long_object,
-    unsigned long divisor);
 
 #endif

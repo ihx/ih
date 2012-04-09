@@ -31,10 +31,9 @@ char *ih_core_nameobject_get_name(ih_core_nameobject_t *nameobject);
 
 void *ih_core_nameobject_get_object(ih_core_nameobject_t *nameobject);
 
-void ih_core_nameobject_init_iobject(ih_core_iobject_t *iobject);
+unsigned long ih_core_nameobject_hash(void *nameobject_object);
 
-unsigned long ih_core_nameobject_mod(void *nameobject_object,
-    unsigned long divisor);
+void ih_core_nameobject_init_iobject(ih_core_iobject_t *iobject);
 
 void ih_core_nameobject_print(void *nameobject_object);
 

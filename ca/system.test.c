@@ -115,7 +115,7 @@ void test_ant(char *name)
     ih_core_trace_exit("malloc");
   }
 
-  sprintf(filename, "snapshots/ant/%s.jpg", name);
+  sprintf(filename, "ca/snapshots/ant/%s.jpg", name);
 
   if (!ih_ca_system_save_snapshot_jpeg(cell_system, filename)) {
     ih_core_trace("ih_ca_system_save_snapshot_jpeg");
@@ -164,7 +164,7 @@ void test_clear(unsigned short name)
     ih_core_trace_exit("malloc");
   }
 
-  sprintf(filename, "snapshots/clear/%03i.jpg", name);
+  sprintf(filename, "ca/snapshots/clear/%03i.jpg", name);
 
   if (!ih_ca_system_save_snapshot_jpeg(cell_system, filename)) {
     ih_core_trace("ih_ca_system_save_snapshot_jpeg");
@@ -213,7 +213,7 @@ void test_crow(unsigned short name)
     ih_core_trace_exit("malloc");
   }
 
-  sprintf(filename, "snapshots/crow/%05i.jpg", name);
+  sprintf(filename, "ca/snapshots/crow/%05i.jpg", name);
 
   if (!ih_ca_system_save_snapshot_jpeg(cell_system, filename)) {
     ih_core_trace("ih_ca_system_save_snapshot_jpeg");
@@ -262,7 +262,7 @@ void test_eca(unsigned short name)
     ih_core_trace_exit("malloc");
   }
 
-  sprintf(filename, "snapshots/eca/%03i.jpg", name);
+  sprintf(filename, "ca/snapshots/eca/%03i.jpg", name);
 
   if (!ih_ca_system_save_snapshot_jpeg(cell_system, filename)) {
     ih_core_trace("ih_ca_system_save_snapshot_jpeg");
@@ -312,7 +312,7 @@ void test_fly(char *name)
     ih_core_trace_exit("malloc");
   }
 
-  sprintf(filename, "snapshots/fly/%s.jpg", name);
+  sprintf(filename, "ca/snapshots/fly/%s.jpg", name);
 
   if (!ih_ca_system_save_snapshot_jpeg(cell_system, filename)) {
     ih_core_trace("ih_ca_system_save_snapshot_jpeg");
@@ -362,7 +362,7 @@ void test_k3(unsigned long name)
 
   ih_ca_system_run(cell_system, run);
 
-  sprintf(filename, "snapshots/k3/%08lu.jpg", name);
+  sprintf(filename, "ca/snapshots/k3/%08lu.jpg", name);
 
   if (!ih_ca_system_save_snapshot_jpeg(cell_system, filename)) {
     ih_core_trace("ih_ca_system_save_snapshot_jpeg");
@@ -410,7 +410,7 @@ void test_malice(char *name)
     ih_core_trace_exit("malloc");
   }
 
-  sprintf(filename, "snapshots/malice/%s.jpg", name);
+  sprintf(filename, "ca/snapshots/malice/%s.jpg", name);
 
   if (!ih_ca_system_save_snapshot_jpeg(cell_system, filename)) {
     ih_core_trace("ih_ca_system_save_snapshot_jpeg");
@@ -460,7 +460,7 @@ void test_pov(char *name)
   }
 
   ih_core_truncate_string(name, 64);
-  sprintf(filename, "snapshots/pov/%s.jpg", name);
+  sprintf(filename, "ca/snapshots/pov/%s.jpg", name);
 
   if (!ih_ca_system_save_snapshot_jpeg(cell_system, filename)) {
     ih_core_trace("ih_ca_system_save_snapshot_jpeg");
@@ -510,7 +510,7 @@ void test_water(char *name)
   }
 
   ih_core_truncate_string(name, 64);
-  sprintf(filename, "snapshots/water/%s.jpg", name);
+  sprintf(filename, "ca/snapshots/water/%s.jpg", name);
 
   if (!ih_ca_system_save_snapshot_jpeg(cell_system, filename)) {
     ih_core_trace("ih_ca_system_save_snapshot_jpeg");

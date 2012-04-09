@@ -21,7 +21,7 @@ ih_core_bool_t ih_core_uuid_compare_equal(void *uuid_a_object, void *uuid_b_obje
 }
 */
 
-unsigned long ih_core_uuid_mod(void *uuid_object, unsigned long divisor)
+unsigned long ih_core_uuid_hash(void *uuid_object, unsigned long divisor)
 {
   assert(uuid_object);
   unsigned char *uuid = uuid_object;

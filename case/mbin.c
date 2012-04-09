@@ -19,6 +19,7 @@ struct ih_case_mbin_t {
   ih_core_bool_t iterate_remove;
   ih_case_mbin_set_type_t set_type;
   ih_core_iobject_t *iobject;
+  pthread_mutex_t mutex;
 };
 
 static ih_core_bool_t become_container(ih_case_mbin_t *mbin);
@@ -42,7 +43,7 @@ ih_core_bool_t become_container(ih_case_mbin_t *mbin)
     assert(mbin->bins);
     for (i = 0; i < mbin->object_count; i++) {
       object = *(mbin->objects + i);
-      remainder = mbin->iobject->mod(object, mbin->bin_count);
+      remainder = mbin->iobject->hash(object) % mbin->bin_count;
       if (!ih_case_mbin_add(*(mbin->bins + remainder), object)) {
         ih_core_trace("x_case_mbin_add");
         success = ih_core_bool_false;
@@ -97,7 +98,7 @@ ih_case_mbin_t *create(ih_core_iobject_t *iobject, unsigned long level,
     ih_case_mbin_set_type_t set_type)
 {
   assert(iobject);
-  assert(iobject->mod);
+  assert(iobject->hash);
   assert(iobject->compare_equal);
   assert(level < PRIMES_COUNT);
   ih_case_mbin_t *mbin;
@@ -115,6 +116,9 @@ ih_case_mbin_t *create(ih_core_iobject_t *iobject, unsigned long level,
     mbin->objects = malloc((sizeof *mbin->objects) * MAX_OBJECTS_PER_BIN);
     if (!mbin->objects) {
       ih_core_trace("malloc");
+    }
+    if (0 != pthread_mutex_init(&mbin->mutex, NULL)) {
+      ih_core_trace("pthread_mutex_init");
     }
   } else {
     ih_core_trace("malloc");
@@ -186,7 +190,7 @@ ih_core_bool_t ih_case_mbin_add(ih_case_mbin_t *mbin, void *object)
 
   if (success) {
     if (mbin->container) {
-      remainder = mbin->iobject->mod(object, mbin->bin_count);
+      remainder = mbin->iobject->hash(object) % mbin->bin_count;
       bin = *(mbin->bins + remainder);
 
       if (IH_CASE_MBIN_SET_TYPE_MULTISET == mbin->set_type) {
@@ -258,6 +262,9 @@ void ih_case_mbin_destroy(ih_case_mbin_t *mbin)
       }
     }
   }
+  if (0 != pthread_mutex_destroy(&mbin->mutex)) {
+    ih_core_trace("pthread_mutex_destroy");
+  }
   free(mbin->objects);
   free(mbin);
 }
@@ -286,7 +293,7 @@ void *ih_case_mbin_find(ih_case_mbin_t *mbin, void *decoy_object)
   /*  printf("find()\n");  */
 
   if (mbin->container) {
-    remainder = mbin->iobject->mod(decoy_object, mbin->bin_count);
+    remainder = mbin->iobject->hash(decoy_object) % mbin->bin_count;
     object = ih_case_mbin_find(*(mbin->bins + remainder), decoy_object);
   } else {
     for (i = 0; i < mbin->object_count; i++) {
@@ -381,6 +388,11 @@ void *ih_case_mbin_iterate_next(ih_case_mbin_t *mbin)
   return object;
 }
 
+void ih_case_mbin_lock(ih_case_mbin_t *mbin)
+{
+  pthread_mutex_lock(&mbin->mutex);
+}
+
 ih_core_bool_t ih_case_mbin_remove(ih_case_mbin_t *mbin,
     void *decoy_object)
 {
@@ -391,7 +403,7 @@ ih_core_bool_t ih_case_mbin_remove(ih_case_mbin_t *mbin,
   unsigned long i;
 
   if (mbin->container) {
-    remainder = mbin->iobject->mod(decoy_object, mbin->bin_count);
+    remainder = mbin->iobject->hash(decoy_object) % mbin->bin_count;
     if (ih_case_mbin_remove(*(mbin->bins + remainder), decoy_object)) {
       success = ih_core_bool_true;
       mbin->contained_object_count--;
@@ -418,4 +430,9 @@ ih_core_bool_t ih_case_mbin_remove(ih_case_mbin_t *mbin,
   }
 
   return success;
+}
+
+void ih_case_mbin_unlock(ih_case_mbin_t *mbin)
+{
+  pthread_mutex_unlock(&mbin->mutex);
 }

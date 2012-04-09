@@ -80,7 +80,7 @@ ih_psql_system_t *ih_psql_system_create(const char *db_host,
     ih_core_iobject_init(&system->string_iobject, ih_core_string_compare,
         ih_core_string_compare_equal, ih_core_string_copy,
         ih_core_string_destroy, ih_core_string_get_as_string,
-        ih_core_string_mod);
+        ih_core_string_hash);
 
     system->connection_count = connection_count;
     system->log = log;

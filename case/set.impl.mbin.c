@@ -57,6 +57,10 @@ void ih_case_set_iterate_start(ih_case_set_t *set)
   ih_case_mbin_iterate_start((ih_case_mbin_t *) set);
 }
 
+void ih_case_set_lock(ih_case_set_t *set) {
+  ih_case_mbin_lock((ih_case_mbin_t *) set);
+}
+
 void ih_case_set_print(ih_case_set_t *set,
     ih_core_object_get_as_string_f get_object_as_string)
 {
@@ -82,4 +86,8 @@ ih_core_bool_t ih_case_set_remove(ih_case_set_t *set, void *object)
 {
   ih_case_mbin_remove((ih_case_mbin_t *) set, object);
   return ih_core_bool_true;
+}
+
+void ih_case_set_unlock(ih_case_set_t *set) {
+  ih_case_mbin_unlock((ih_case_mbin_t *) set);
 }

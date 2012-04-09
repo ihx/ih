@@ -35,12 +35,10 @@ unsigned long ih_core_uuid_get_memory_size_bytes(ih_core_uuid_t *uuid);
 
 char *ih_core_uuid_get_string(void *uuid_object);
 
-unsigned long ih_core_uuid_hash(ih_core_uuid_t *uuid);
+unsigned long ih_core_uuid_hash(void *uuid_object);
 
 void ih_core_uuid_init_iobject(ih_core_iobject_t *iobject);
 
 ih_core_bool_t ih_core_uuid_is_null(ih_core_uuid_t *uuid);
-
-unsigned long ih_core_uuid_mod(void *uuid_object, unsigned long divisor);
 
 #endif

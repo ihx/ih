@@ -8,7 +8,8 @@ ih_core_bool_t ih_core_stop_requested;
 
 void ih_core_do_nothing() {}
 
-ih_core_bool_t ih_core_get_current_time_string(ih_core_time_string_t time_string)
+ih_core_bool_t ih_core_get_current_time_string
+(ih_core_time_string_t time_string)
 {
   assert(time_string);
   struct timeval time_value;
@@ -40,6 +41,9 @@ ih_core_bool_t ih_core_get_current_time_string(ih_core_time_string_t time_string
   return success;
 }
 
+/*
+  TODO: is this supposed to return something between 0.0 and 1.0?
+*/
 double ih_core_gray_coin_toss()
 {
   return ((double) random()) / (random());
@@ -333,8 +337,8 @@ void ih_core_terminal_nonblock()
   tcsetattr(STDIN_FILENO, TCSANOW, &ttystate);
 }
 
-ih_core_bool_t ih_core_time_is_remaining_microseconds(struct timeval *start_time,
-    unsigned long max_wall_time_microseconds)
+ih_core_bool_t ih_core_time_is_remaining_microseconds
+(struct timeval *start_time, unsigned long max_wall_time_microseconds)
 {
   assert(start_time);
   struct timeval current_time;
@@ -390,14 +394,10 @@ unsigned long ih_core_wrap_index(long virtual_index, unsigned long range)
   return wrapped_index;
 }
 
-#ifdef IH_PLATFORM_DARWIN
+#if defined IH_PLATFORM_DARWIN
 #include "ih/core/tools.impl.darwin.c"
-#endif
-
-#ifdef IH_PLATFORM_LINUX
+#elif defined IH_PLATFORM_LINUX
 #include "ih/core/tools.impl.linux.c"
-#endif
-
-#ifdef IH_PLATFORM_NETBSD
+#elif defined  IH_PLATFORM_NETBSD
 #include "ih/core/tools.impl.netbsd.c"
 #endif

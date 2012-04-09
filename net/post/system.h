@@ -28,9 +28,9 @@ int ih_net_post_system_get_socket(void *post_object);
 void ih_net_post_system_get_stats(void *post_object,
     ih_net_post_stats_t *post_stats);
 
-ih_core_bool_t ih_net_post_system_is_socket_closed(void *post_object);
+unsigned long ih_net_post_system_hash(void *post_object);
 
-unsigned long ih_net_post_system_mod(void *post_object, unsigned long divisor);
+ih_core_bool_t ih_net_post_system_is_socket_closed(void *post_object);
 
 void *ih_net_post_system_receive_message(void *post_object);
 

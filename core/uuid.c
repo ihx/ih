@@ -11,13 +11,9 @@ struct ih_core_uuid_t {
 
 #if defined IH_PLATFORM_DARWIN
 #include "ih/core/uuid.impl.darwin.c"
-#endif
-
-#if defined IH_PLATFORM_LINUX
+#elif defined IH_PLATFORM_LINUX
 #include "ih/core/uuid.impl.linux.c"
-#endif
-
-#if defined IH_PLATFORM_NETBSD
+#elif defined IH_PLATFORM_NETBSD
 #include "ih/core/uuid.impl.netbsd.c"
 #endif
 
@@ -116,15 +112,11 @@ unsigned long ih_core_uuid_get_memory_size_bytes(ih_core_uuid_t *uuid)
   return size;
 }
 
-unsigned long ih_core_uuid_hash(ih_core_uuid_t *uuid)
+unsigned long ih_core_uuid_hash(void *uuid_object)
 {
-  assert(uuid);
-  unsigned long hash;
-
-  ih_core_uuid_get_string(uuid);
-  hash = ih_core_hash_djb2_xor(uuid->string);
-
-  return hash;
+  assert(uuid_object);
+  ih_core_uuid_t *uuid = uuid_object;
+  return ih_core_hash(ih_core_uuid_get_string(uuid));
 }
 
 void ih_core_uuid_init_iobject(ih_core_iobject_t *iobject)
@@ -132,7 +124,7 @@ void ih_core_uuid_init_iobject(ih_core_iobject_t *iobject)
   ih_core_iobject_init(iobject, ih_core_uuid_compare,
       ih_core_uuid_compare_equal, ih_core_uuid_copy,
       ih_core_uuid_destroy, ih_core_uuid_get_as_string,
-      ih_core_uuid_mod);
+      ih_core_uuid_hash);
 }
 
 ih_core_bool_t ih_core_uuid_is_null(ih_core_uuid_t *uuid)

@@ -78,7 +78,7 @@ ih_case_shardset_t *ih_case_shardset_create
 (ih_core_object_compare_f compare,
     ih_core_object_compare_equal_f compare_equal,
     ih_core_object_copy_f copy, ih_core_object_destroy_f destroy,
-    ih_core_object_hash_f hash_object, ih_core_object_mod_f mod,
+    ih_core_object_hash_f hash_object, ih_core_object_hash_f hash,
     unsigned short shard_count)
 {
   assert(shard_count > 0);
@@ -108,7 +108,7 @@ ih_case_shardset_t *ih_case_shardset_create
 
   if (so_far_so_good) {
     ih_core_iobject_init(&shardset->set_iobject, compare, compare_equal,
-        copy, destroy, IH_CORE_OBJECT_NO_GET_AS_STRING_F, mod);
+        copy, destroy, IH_CORE_OBJECT_NO_GET_AS_STRING_F, hash);
     for (each_shard = 0; each_shard < shard_count; each_shard++) {
       *(shardset->shards + each_shard)
         = ih_case_set_create(&shardset->set_iobject);
@@ -277,9 +277,9 @@ void *ih_case_shardset_iterate_next
   /*
     TODO: there may be a cleaner implementation...this block (almost) is
     repeated in ih_case_shardset_iterate_start().  this implementation is
-    sortof a hybrid of the way ih_core_set/list/array do iteration, crossed with
-    the changes necessary in this context.  it may be that in this context
-    there is an implementation with much less happening in
+    sortof a hybrid of the way ih_core_set/list/array do iteration, crossed
+    with the changes necessary in this context.  it may be that in this
+    context there is an implementation with much less happening in
     ih_case_shardset_iterate_start().
   */
   while (!shardset->iterator) {

@@ -84,7 +84,7 @@ ih_case_map_t *ih_case_map_create(ih_core_iobject_t *left_iobject,
     map->destroy = destroy;
     ih_core_iobject_init(&map->pairs_iobject, ih_core_pair_compare_left,
         ih_core_pair_equal_left, ih_core_pair_copy, ih_core_pair_destroy,
-        IH_CORE_OBJECT_NO_GET_AS_STRING_F, ih_core_pair_mod_left);
+        IH_CORE_OBJECT_NO_GET_AS_STRING_F, ih_core_pair_hash_left);
     map->pairs = ih_case_set_create(&map->pairs_iobject);
     if (!map->pairs) {
       ih_core_trace("x_case_set_create");

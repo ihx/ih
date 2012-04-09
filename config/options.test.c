@@ -16,7 +16,8 @@ int main(int argc, char *argv[])
     ih_core_trace_exit("x_config_options_create");
   }
 
-  if (ih_config_options_find_as_string(options, "mode", &value, DEFAULT_MODE)) {
+  if (ih_config_options_find_as_string(options, "mode", &value,
+          DEFAULT_MODE)) {
     printf(":%s:\n", value);
   } else {
   }

@@ -21,7 +21,7 @@ ih_net_exchange_t *ih_net_exchange_create(ih_net_post_ipost_t *ipost)
     ih_core_iobject_init(&exchange->ipost_iobject, ipost->compare,
         ipost->compare_equal, IH_CORE_OBJECT_NO_COPY_F,
         IH_CORE_OBJECT_NO_DESTROY_F, IH_CORE_OBJECT_NO_GET_AS_STRING_F,
-        ipost->mod);
+        ipost->hash);
     exchange->posts = ih_case_set_create(&exchange->ipost_iobject);
     if (!exchange->posts) {
       ih_core_trace("x_case_set_create");

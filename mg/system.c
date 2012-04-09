@@ -122,6 +122,8 @@ double get_fitness(ih_mg_system_t *system, unsigned short organism_index)
   if (!organism->fitness_is_valid) {
     organism->fitness = system->calculate_fitness(organism->genome,
         system->context);
+    assert(organism->fitness >= 0.0);
+    assert(organism->fitness <= 1.0);
     if (organism->fitness > system->fittest_fitness) {
       system->fittest_fitness = organism->fitness;
       system->fittest_organism_index = organism_index;

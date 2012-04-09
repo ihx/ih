@@ -17,7 +17,8 @@ ih_case_hash_table_t *ih_case_hash_table_create(ih_core_iobject_t *iobject);
 
 void ih_case_hash_table_destroy(ih_case_hash_table_t *hash_table);
 
-void ih_case_hash_table_dont_destroy_objects(ih_case_hash_table_t *hash_table);
+void ih_case_hash_table_dont_destroy_objects
+(ih_case_hash_table_t *hash_table);
 
 void *ih_case_hash_table_find(ih_case_hash_table_t *hash_table,
     void *decoy_object);
@@ -33,7 +34,11 @@ void ih_case_hash_table_iterate_start(ih_case_hash_table_t *hash_table);
 
 void *ih_case_hash_table_iterate_next(ih_case_hash_table_t *hash_table);
 
+void ih_case_hash_table_lock(ih_case_hash_table_t *hash_table);
+
 ih_core_bool_t ih_case_hash_table_remove(ih_case_hash_table_t *hash_table,
     void *decoy_object);
+
+void ih_case_hash_table_unlock(ih_case_hash_table_t *hash_table);
 
 #endif

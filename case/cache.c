@@ -47,7 +47,7 @@ ih_case_cache_t *ih_case_cache_create(ih_core_object_compare_f compare,
     cache->objects_qutex = NULL;
     ih_core_iobject_init(&cache->objects_iobject, compare,
         IH_CORE_OBJECT_NO_COMPARE_EQUAL_F, copy, destroy,
-        IH_CORE_OBJECT_NO_GET_AS_STRING_F, IH_CORE_OBJECT_NO_MOD_F);
+        IH_CORE_OBJECT_NO_GET_AS_STRING_F, IH_CORE_OBJECT_NO_HASH_F);
     cache->objects = ih_case_set_create(&cache->objects_iobject);
     if (cache->objects) {
       so_far_so_good = ih_core_bool_true;
