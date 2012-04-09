@@ -28,6 +28,7 @@ Install dependencies
   + libjpeg                                             ( http://www.ijg.org/ )
   + curses
   + postgresql
+  + makedepend
 
 Make
   + "cd $IH"

@@ -39,7 +39,7 @@ endif
 ifeq ($(os),NetBSD)
   library_paths += -L/usr/local/lib -L/usr/lib
 endif
-include_paths = -I$(IH)/.. -I$(IH_INCLUDE_PATH)
+include_paths = -I/usr/local/include -I$(IH)/.. -I$(IH_INCLUDE_PATH)
 link_options = -ansi $(build) $(platform) $(debugging) $(optimization) $(warnings) $(include_paths) -D_GNU_SOURCE $(library_paths) $(libraries)
 compile_options = -ansi $(build) $(platform) $(debugging) $(optimization) $(warnings) $(include_paths) -D_GNU_SOURCE
 
