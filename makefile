@@ -8,4 +8,4 @@ $(LIBRARY): $(OBJECTS)
 	ar rcs $(LIBRARY) *.o
 
 clean:
-	rm -f *~ .*~ *.o $(LIBRARY)
+	rm -f *~ .*~ *.o .etags $(LIBRARY)
