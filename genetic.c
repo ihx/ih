@@ -189,17 +189,18 @@ ih_genome_t ih_genetic_generate(ih_genetic_t *system)
         parent_a = system->population + parent_a_index;
         parent_b = system->population + parent_b_index;
         child = system->population + child_index;
-        cut_point = random() % 32;
+        cut_point = random() % IH_GENOME_SIZE_BITS;
         for (i = 0; i < cut_point; i++) {
           ih_tools_set_bit(&child->genome, i,
               ih_tools_get_bit(parent_a->genome, i));
         }
-        for (i = cut_point; i < 32; i++) {
+        for (i = cut_point; i < IH_GENOME_SIZE_BITS; i++) {
           ih_tools_set_bit(&child->genome, i,
               ih_tools_get_bit(parent_b->genome, i));
         }
         if (0 == (random() % MUTATION_MODULUS)) {
-          ih_tools_set_bit(&child->genome, random() % 32, random() % 2);
+          ih_tools_set_bit(&child->genome, random() % IH_GENOME_SIZE_BITS,
+              random() % 2);
         }
         mating_count++;
       }
@@ -219,7 +220,7 @@ void randomize_genome(ih_genome_t *genome)
 {
   unsigned short i;
 
-  for (i = 0; i < 32; i++) {
+  for (i = 0; i < IH_GENOME_SIZE_BITS; i++) {
     ih_tools_set_bit(genome, i, random() % 2);
   }
 }
