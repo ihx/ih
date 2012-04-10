@@ -9,3 +9,6 @@ $(LIBRARY): $(OBJECTS)
 
 clean:
 	rm -f *~ .*~ *.o .etags $(LIBRARY)
+
+stats:
+	wc -l *.h *.c
