@@ -208,7 +208,6 @@ void ih_ca_system_run(ih_ca_system_t *system, ih_sync_run_t *run)
   unsigned long cell_index;
   unsigned long cell_count;
   ih_ca_state_t *current_state;
-  unsigned long state_history_size;
   ih_ca_t new_cell_state;
 
   if (system->random_seed_is_set) {
@@ -219,7 +218,6 @@ void ih_ca_system_run(ih_ca_system_t *system, ih_sync_run_t *run)
     current_state = get_current_state(system);
     cell_count = ih_ca_state_get_cell_count(current_state);
 
-    state_history_size = ih_case_array_get_size(system->state_history);
     if (create_new_current_state(system)) {
       if (system->systemey->start_time_step) {
         system->systemey->start_time_step(system);

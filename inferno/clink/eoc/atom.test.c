@@ -57,16 +57,14 @@ int main(int argc, char *argv[])
   ih_disable_test();
 
   ih_inferno_clink_system_t *clink;
-  ih_inferno_clink_concept_t *concept;
   char current_char = ' ';
   char last_char = ' ';
   char *current_object;
   char *last_object;
 
-  concept = NULL;
 
-  clink = ih_inferno_clink_system_create(MAX_CONCEPTS, MAX_LINKS, compare, destroy,
-      NULL);
+  clink = ih_inferno_clink_system_create(MAX_CONCEPTS, MAX_LINKS, compare,
+      destroy, NULL);
   if (clink) {
     while ((current_char = getc(stdin))) {
       if ('\n' == current_char) {

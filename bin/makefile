@@ -26,13 +26,13 @@ endif
 
 compiler = gcc
 libraries = -ljpeg -lm -lcurses -lpq -lpthread
-library_paths = -L. -L$(IH_LIBRARY_PATH) -L/usr/lib -L/usr/local/lib
+library_paths = -L. $(IH_LIBRARY_PATHS) -L/usr/lib -L/usr/local/lib
 ifeq ($(os),Linux)
   libraries += -luuid
 endif
 ifeq ($(os),NetBSD)
 endif
-include_paths = -I$(IH)/.. -I$(IH_INCLUDE_PATH)
+include_paths = -I$(IH)/.. $(IH_INCLUDE_PATHS)
 link_options = -ansi $(build) $(platform) $(debugging) $(optimization) $(warnings) $(include_paths) -D_GNU_SOURCE $(library_paths) $(libraries)
 compile_options = -ansi $(build) $(platform) $(debugging) $(optimization) $(warnings) $(include_paths) -D_GNU_SOURCE
 

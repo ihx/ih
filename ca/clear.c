@@ -106,9 +106,11 @@ void ih_ca_clear_destroy_context(void *context_object)
 void ih_ca_clear_end_time_step(ih_ca_system_t *system)
 {
   assert(system);
+  /*
   clear_context_t *clear_context;
 
   clear_context = ih_ca_system_get_context(system);
+  */
 }
 
 void ih_ca_clear_init_systemey(ih_ca_systemey_t *systemey, void *name_object)
@@ -123,9 +125,11 @@ void ih_ca_clear_init_systemey(ih_ca_systemey_t *systemey, void *name_object)
 void ih_ca_clear_start_time_step(ih_ca_system_t *system)
 {
   assert(system);
+  /*
   clear_context_t *clear_context;
 
   clear_context = ih_ca_system_get_context(system);
+  */
 
   /*
   clear_context->total = 0;

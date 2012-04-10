@@ -5,14 +5,14 @@
 int main(int argc, char *argv[])
 {
   unsigned long each_toss;
-  unsigned short toss_result;
+  /*  unsigned short toss_result;  */
   unsigned short i;
   uint32_t value32;
 
   if (ih_core_bool_false) {
     printf("tossing a coin %d times\n", REPETITIONS);
     for (each_toss = 0; each_toss < REPETITIONS; each_toss++) {
-      toss_result = ih_core_toss_coin();
+      /*  toss_result = ih_core_toss_coin();  */
     }
   }
 
