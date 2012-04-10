@@ -1,7 +1,8 @@
+#include "bit.h"
 #include "boole.h"
 #include "minigen.h"
 #include "standard.h"
-#include "tools.h"
+#include "trace.h"
 
 #define CONVERGENCE_SAMPLE_SIZE 16               /*  sqrt(POPULATION_SIZE)  */
 #define CONVERGENCE_THRESHOLD 0.2
@@ -152,7 +153,7 @@ ih_minigen_t *ih_minigen_create
     system->run_once = ih_boole_false;
     srandom(time(NULL));
   } else {
-    ih_tools_trace("malloc");
+    ih_trace("malloc");
   }
 
   return system;
@@ -191,15 +192,13 @@ ih_genome_t ih_minigen_generate(ih_minigen_t *system)
         child = system->population + child_index;
         cut_point = random() % IH_GENOME_SIZE_BITS;
         for (i = 0; i < cut_point; i++) {
-          ih_tools_set_bit(&child->genome, i,
-              ih_tools_get_bit(parent_a->genome, i));
+          ih_bit_set(&child->genome, i, ih_bit_get(parent_a->genome, i));
         }
         for (i = cut_point; i < IH_GENOME_SIZE_BITS; i++) {
-          ih_tools_set_bit(&child->genome, i,
-              ih_tools_get_bit(parent_b->genome, i));
+          ih_bit_set(&child->genome, i, ih_bit_get(parent_b->genome, i));
         }
         if (0 == (random() % MUTATION_MODULUS)) {
-          ih_tools_set_bit(&child->genome, random() % IH_GENOME_SIZE_BITS,
+          ih_bit_set(&child->genome, random() % IH_GENOME_SIZE_BITS,
               random() % 2);
         }
         mating_count++;
@@ -209,7 +208,7 @@ ih_genome_t ih_minigen_generate(ih_minigen_t *system)
     /*  printf("\n");  */
     system->run_once = ih_boole_true;
   } else {
-    ih_tools_trace_exit("ih_minigen_generate() has already been run for "
+    ih_trace_exit("ih_minigen_generate() has already been run for "
         "this system.  only call this function once per system.");
   }
 
@@ -221,6 +220,6 @@ void randomize_genome(ih_genome_t *genome)
   unsigned short i;
 
   for (i = 0; i < IH_GENOME_SIZE_BITS; i++) {
-    ih_tools_set_bit(genome, i, random() % 2);
+    ih_bit_set(genome, i, random() % 2);
   }
 }

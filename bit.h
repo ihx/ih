@@ -7,4 +7,10 @@ enum ih_bit_t {
 };
 typedef enum ih_bit_t ih_bit_t;
 
+#define ih_bit_get(value, bit_index) ((value >> bit_index) & 1)
+
+#define ih_bit_set(value, bit_index, bit_value)       \
+  if (bit_value) { *value |= (1 << bit_index); }      \
+  else { *value &= ~(1 << bit_index); }
+
 #endif
