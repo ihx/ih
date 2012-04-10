@@ -3,6 +3,7 @@
 #include "wrap.h"
 
 #define TIME_STEPS IH_BITARRAY_SIZE
+#undef DEBUG_PRINT
 
 ih_bit_t ih_classify_eca(ih_bitarray_t bitarray, unsigned long rule,
     ih_classify_style_t style)
@@ -31,7 +32,13 @@ ih_bit_t ih_classify_eca(ih_bitarray_t bitarray, unsigned long rule,
       neighborhood = (4 * a) + (2 * b) + c;
       cell_value = ih_ca_calculate(rule, neighborhood);
       ih_bit_set(&history[i], j, cell_value);
+#ifdef DEBUG_PRINT
+      printf("%d", cell_value);
+#endif
     }
+#ifdef DEBUG_PRINT
+    printf("\n");
+#endif
   }
 
   switch (style) {
