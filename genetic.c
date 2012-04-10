@@ -13,7 +13,7 @@
 #define MUTATION_MODULUS (POPULATION_SIZE / 4)
 
 struct organism_t {
-  uint32_t genome;
+  ih_genome_t genome;
   double fitness;
   ih_boole_t fitness_is_valid;
 };
@@ -35,7 +35,7 @@ static ih_boole_t converged(ih_genetic_t *system);
 static void diverge(ih_genetic_t *system);
 static double get_fitness(ih_genetic_t *system,
     unsigned short organism_index);
-static void randomize_genome(uint32_t *genome);
+static void randomize_genome(ih_genome_t *genome);
 
 unsigned short choose_child(ih_genetic_t *system)
 {
@@ -163,7 +163,7 @@ void ih_genetic_destroy(ih_genetic_t *system)
   free(system);
 }
 
-uint32_t ih_genetic_generate(ih_genetic_t *system)
+ih_genome_t ih_genetic_generate(ih_genetic_t *system)
 {
   unsigned short parent_a_index;
   unsigned short parent_b_index;
@@ -189,17 +189,18 @@ uint32_t ih_genetic_generate(ih_genetic_t *system)
         parent_a = system->population + parent_a_index;
         parent_b = system->population + parent_b_index;
         child = system->population + child_index;
-        cut_point = random() % 32;
+        cut_point = random() % IH_GENOME_SIZE_BITS;
         for (i = 0; i < cut_point; i++) {
           ih_tools_set_bit(&child->genome, i,
               ih_tools_get_bit(parent_a->genome, i));
         }
-        for (i = cut_point; i < 32; i++) {
+        for (i = cut_point; i < IH_GENOME_SIZE_BITS; i++) {
           ih_tools_set_bit(&child->genome, i,
               ih_tools_get_bit(parent_b->genome, i));
         }
         if (0 == (random() % MUTATION_MODULUS)) {
-          ih_tools_set_bit(&child->genome, random() % 32, random() % 2);
+          ih_tools_set_bit(&child->genome, random() % IH_GENOME_SIZE_BITS,
+              random() % 2);
         }
         mating_count++;
       }
@@ -215,11 +216,11 @@ uint32_t ih_genetic_generate(ih_genetic_t *system)
   return (system->population + system->fittest_organism_index)->genome;
 }
 
-void randomize_genome(uint32_t *genome)
+void randomize_genome(ih_genome_t *genome)
 {
   unsigned short i;
 
-  for (i = 0; i < 32; i++) {
+  for (i = 0; i < IH_GENOME_SIZE_BITS; i++) {
     ih_tools_set_bit(genome, i, random() % 2);
   }
 }
