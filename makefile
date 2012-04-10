@@ -10,5 +10,8 @@ $(LIBRARY): $(OBJECTS)
 clean:
 	rm -f *~ .*~ *.o .etags $(LIBRARY)
 
+install:
+	install -d libih.a /usr/lib
+
 stats:
 	wc -l *.h *.c
