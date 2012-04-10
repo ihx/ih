@@ -1,50 +1,57 @@
-inhesion is a library for genetic and cellular programming, written in ANSI C.
+== ABOUT ======================================================================
 
-We test on Linux and NetBSD.  Other platforms will probably work.
+inhesion is a cellular genetic programming library.
 
-inhesion is BSD licensed.  Support contracts are available for corporate
-customers (contact clownfysh@gmail.com).  Other than that, your best bet is to
-read the code!
+a cellular genetic programming library is a system that supports the building
+and running of cellular genetic programs.  in process-based programming, you
+write programs for a particular purpose, with very specific code designed to
+do a very narrow series of things.  in a cellular genetic operating
+environment, you don't write programs like that.  instead, you set in motion
+systems whose behavior you don't fully understand.  you set in motion emergent
+systems.  you define parameters of activity, rather than procedures of
+activity.
 
-What's inside
-  + bin      ( environment, makefile, scripts )
-  + ca       ( cellular automata )
-  + case     ( containers :: array, list, set, .. )
-  + config   ( config file reading and command-line options )
-  + core     ( objects and basic tools )
-  + file     ( file read/write )
-  + hcx      ( cellular/genetic tools )
-  + inferno  ( cultural-genetic search :: the cor3, bios, and eos algorithms )
-  + mg       ( minigen genetic search :: a GA in about 200 lines of code )
-  + net      ( client/server networking )
-  + sync     ( thread synchronization )
+building software in a cellular genetic fashion is less like programming and
+more like gardening.  you eschew the illusion of total control, and you open
+yourself and your software to the possibility that something unexpected will
+happen.  something better than you ever could have planned.
 
-Set up environment
-  + point $IH to the directory containing this README file
-  + add $IH/bin to $PATH
+inhesion helps you tend such gardens.
 
-Install dependencies
-  + C standard headers       ( stddef.h, etc. )
-    + set $IH_INCLUDE_PATHS  ( like -I/usr/lib/gcc/include -I/xyz )
-  + an ANSI C compiler       ( http://en.wikipedia.org/wiki/ANSI_C )
-  + POSIX Threads            ( http://en.wikipedia.org/wiki/POSIX_Threads )
-  + libjpeg                  ( http://www.ijg.org/ )
-  + curses                   ( .. )
-  + postgresql               ( http://www.postgresql.org/ )
-  + makedepend               ( .. )
+it is free, open source, and written entirely in ansi c.  its only dependency
+is the standard library.  so you can use it anywhere.  to build it, just type
+"make".
 
-Make
-  + "cd $IH"
-  + "make help" explains the make commands
+== TESTS/HOW TO ===============================================================
 
-If you want to commit back to the project
-  + read and follow the guide in doc/style.txt
-  + "make test", "make release" and "make clean" before committing
 
-Contact
-  + www     ( http://inhesion.com/ )
-  + about   ( http://inhesion.com/about )
-  + source  ( http://inhesion.com/source )
-  + issues  ( http://inhesion.com/issues )
-  + wiki    ( http://inhesion.com/wiki )
-  + email   ( clownfysh@gmail.com )
+
+== SUPPORT ====================================================================
+
+support contracts are available.  contact clownfysh@gmail.com for details.
+
+== LICENSE ====================================================================
+
+copyright (c) 2011, 2012 inhaesio zha
+all rights reserved.
+
+redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+- redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
+
+- redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+this software is provided by the copyright holders and contributors "as is" and
+any express or implied warranties, including, but not limited to, the implied
+warranties of merchantability and fitness for a particular purpose are
+disclaimed. in no event shall the copyright holder or contributors be liable
+for any direct, indirect, incidental, special, exemplary, or consequential
+damages (including, but not limited to, procurement of substitute goods or
+services; loss of use, data, or profits; or business interruption) however
+caused and on any theory of liability, whether in contract, strict liability,
+or tort (including negligence or otherwise) arising in any way out of the use
+of this software, even if advised of the possibility of such damage.

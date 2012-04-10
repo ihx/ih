@@ -1,6 +1,0 @@
-#!/bin/sh
-
-FIND=$1
-REPLACE=$2
-
-find . -name "*.[h,c]" -print -exec replace-in-file {} "$FIND" "$REPLACE" \;

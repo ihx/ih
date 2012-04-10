@@ -1,7 +1,0 @@
-#include "ih/ca/k3.h"
-#include "ih/core/standard.h"
-
-int main(int argc, char *argv[])
-{
-  return 0;
-}

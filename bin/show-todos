@@ -1,3 +1,0 @@
-#!/bin/sh
-
-find . -name "*.[h,c]" -exec show-todos-in-file {} \;
