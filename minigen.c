@@ -1,5 +1,5 @@
 #include "boole.h"
-#include "genetic.h"
+#include "minigen.h"
 #include "standard.h"
 #include "tools.h"
 
@@ -19,8 +19,8 @@ struct organism_t {
 };
 typedef struct organism_t organism_t;
 
-struct ih_genetic_t {
-  ih_genetic_calculate_fitness_f calculate_fitness;
+struct ih_minigen_t {
+  ih_minigen_calculate_fitness_f calculate_fitness;
   organism_t population[POPULATION_SIZE];
   double fittest_fitness;
   unsigned short fittest_organism_index;
@@ -29,15 +29,15 @@ struct ih_genetic_t {
   ih_boole_t run_once;
 };
 
-static unsigned short choose_child(ih_genetic_t *system);
-static unsigned short choose_parent(ih_genetic_t *system);
-static ih_boole_t converged(ih_genetic_t *system);
-static void diverge(ih_genetic_t *system);
-static double get_fitness(ih_genetic_t *system,
+static unsigned short choose_child(ih_minigen_t *system);
+static unsigned short choose_parent(ih_minigen_t *system);
+static ih_boole_t converged(ih_minigen_t *system);
+static void diverge(ih_minigen_t *system);
+static double get_fitness(ih_minigen_t *system,
     unsigned short organism_index);
 static void randomize_genome(ih_genome_t *genome);
 
-unsigned short choose_child(ih_genetic_t *system)
+unsigned short choose_child(ih_minigen_t *system)
 {
   unsigned short possible_a_index = random() % POPULATION_SIZE;
   unsigned short possible_b_index = random() % POPULATION_SIZE;
@@ -53,7 +53,7 @@ unsigned short choose_child(ih_genetic_t *system)
   return child_index;
 }
 
-unsigned short choose_parent(ih_genetic_t *system)
+unsigned short choose_parent(ih_minigen_t *system)
 {
   unsigned short possible_a_index = random() % POPULATION_SIZE;
   unsigned short possible_b_index = random() % POPULATION_SIZE;
@@ -69,7 +69,7 @@ unsigned short choose_parent(ih_genetic_t *system)
   return parent_index;
 }
 
-static ih_boole_t converged(ih_genetic_t *system)
+static ih_boole_t converged(ih_minigen_t *system)
 {
   double max_fitness = 0.0;
   double min_fitness = 1.0;
@@ -98,7 +98,7 @@ static ih_boole_t converged(ih_genetic_t *system)
   return converged;
 }
 
-void diverge(ih_genetic_t *system)
+void diverge(ih_minigen_t *system)
 {
   unsigned short i;
   organism_t *organism;
@@ -113,7 +113,7 @@ void diverge(ih_genetic_t *system)
   }
 }
 
-double get_fitness(ih_genetic_t *system, unsigned short organism_index)
+double get_fitness(ih_minigen_t *system, unsigned short organism_index)
 {
   organism_t *organism = system->population + organism_index;
 
@@ -129,11 +129,11 @@ double get_fitness(ih_genetic_t *system, unsigned short organism_index)
   return organism->fitness;
 }
 
-ih_genetic_t *ih_genetic_create
-(ih_genetic_calculate_fitness_f calculate_fitness, double required_fitness,
+ih_minigen_t *ih_minigen_create
+(ih_minigen_calculate_fitness_f calculate_fitness, double required_fitness,
     void *context)
 {
-  ih_genetic_t *system;
+  ih_minigen_t *system;
   unsigned short i;
   organism_t *organism;
 
@@ -158,12 +158,12 @@ ih_genetic_t *ih_genetic_create
   return system;
 }
 
-void ih_genetic_destroy(ih_genetic_t *system)
+void ih_minigen_destroy(ih_minigen_t *system)
 {
   free(system);
 }
 
-ih_genome_t ih_genetic_generate(ih_genetic_t *system)
+ih_genome_t ih_minigen_generate(ih_minigen_t *system)
 {
   unsigned short parent_a_index;
   unsigned short parent_b_index;
@@ -209,7 +209,7 @@ ih_genome_t ih_genetic_generate(ih_genetic_t *system)
     /*  printf("\n");  */
     system->run_once = ih_boole_true;
   } else {
-    ih_tools_trace_exit("ih_genetic_generate() has already been run for "
+    ih_tools_trace_exit("ih_minigen_generate() has already been run for "
         "this system.  only call this function once per system.");
   }
 
