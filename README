@@ -22,12 +22,11 @@ it is free, open source, and written entirely in ansi c.  its only dependency
 is the standard library.  so you can use it anywhere.  to build it, just type
 "make".
 
-== TESTS/HOW TO ===============================================================
+== HOW TO =====================================================================
 
-to keep the library clean, inhesion contains no test programs; it contains
-just the library systems themselves.  test programs are at
-https://github.com/ihx/test and are a good way of understanding how to use the
-library.  each system in inhesion has a test program in the test repository.
+to learn how to use inhesion, check out the how to repository:
+https://github.com/ihx/howto.  it contains a how to program for each system in
+the inhesion library.
 
 == SUPPORT ====================================================================
 
