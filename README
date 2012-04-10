@@ -2,7 +2,9 @@ inhesion is a code library written in ansi c.  It includes containers and
 networking.  It includes classification and search algorithms of the
 cultural/genetic style.
 
-inhesion is bsd licensed.  Support contracts are available for corporate
+inhesion is tested on Linux and NetBSD.  Other platforms will probably work.
+
+inhesion is BSD licensed.  Support contracts are available for corporate
 customers (contact clownfysh@gmail.com).  Other than that, your best bet is to
 read the code!
 
