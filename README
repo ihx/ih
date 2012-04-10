@@ -24,7 +24,10 @@ is the standard library.  so you can use it anywhere.  to build it, just type
 
 == TESTS/HOW TO ===============================================================
 
-
+to keep the library clean, inhesion contains no test programs; it contains
+just the library systems themselves.  test programs are at
+https://github.com/ihx/test and are a good way of understanding how to use the
+library.  each system in inhesion has a test program in the test repository.
 
 == SUPPORT ====================================================================
 
