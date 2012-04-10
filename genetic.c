@@ -13,7 +13,7 @@
 #define MUTATION_MODULUS (POPULATION_SIZE / 4)
 
 struct organism_t {
-  uint32_t genome;
+  ih_genome_t genome;
   double fitness;
   ih_boole_t fitness_is_valid;
 };
@@ -35,7 +35,7 @@ static ih_boole_t converged(ih_genetic_t *system);
 static void diverge(ih_genetic_t *system);
 static double get_fitness(ih_genetic_t *system,
     unsigned short organism_index);
-static void randomize_genome(uint32_t *genome);
+static void randomize_genome(ih_genome_t *genome);
 
 unsigned short choose_child(ih_genetic_t *system)
 {
@@ -163,7 +163,7 @@ void ih_genetic_destroy(ih_genetic_t *system)
   free(system);
 }
 
-uint32_t ih_genetic_generate(ih_genetic_t *system)
+ih_genome_t ih_genetic_generate(ih_genetic_t *system)
 {
   unsigned short parent_a_index;
   unsigned short parent_b_index;
@@ -215,7 +215,7 @@ uint32_t ih_genetic_generate(ih_genetic_t *system)
   return (system->population + system->fittest_organism_index)->genome;
 }
 
-void randomize_genome(uint32_t *genome)
+void randomize_genome(ih_genome_t *genome)
 {
   unsigned short i;
 
