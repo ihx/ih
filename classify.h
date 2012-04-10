@@ -11,13 +11,10 @@ enum ih_classify_style_t {
 };
 typedef enum ih_classify_style_t ih_classify_style_t;
 
-ih_bit_t ih_classify_ant(ih_bitarray_t bitarray, unsigned long rule,
+ih_bit_t ih_classify_crow(ih_bitarray_t bitarray, unsigned long rule,
     ih_classify_style_t style);
 
 ih_bit_t ih_classify_eca(ih_bitarray_t bitarray, unsigned long rule,
-    ih_classify_style_t style);
-
-ih_bit_t ih_classify_crow(ih_bitarray_t bitarray, unsigned long rule,
     ih_classify_style_t style);
 
 #define ih_classify ih_classify_eca

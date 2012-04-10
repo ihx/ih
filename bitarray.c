@@ -9,3 +9,9 @@ void ih_bitarray_randomize(ih_bitarray_t *bitarray)
     ih_bit_set(bitarray, i, random() % 2);
   }
 }
+
+void ih_bitarray_seed_center(ih_bitarray_t *bitarray)
+{
+  *bitarray = 0;
+  ih_bit_set(bitarray, IH_BITARRAY_SIZE / 2, 1);
+}
