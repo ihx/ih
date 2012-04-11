@@ -5,13 +5,13 @@
 unsigned char ih_bitarray_get_uchar(ih_bitarray_t *bitarray,
     unsigned short position)
 {
-  unsigned char uchar = 0;
+  unsigned short uchar = 0;
   unsigned short i;
   unsigned short place_value = 1;
 
   for (i = position; i < position + 8; i++) {
     uchar += place_value * ih_bit_get(*bitarray,
-        ih_wrap(position, IH_BITARRAY_SIZE));
+        ih_wrap(i, IH_BITARRAY_SIZE));
     place_value *= 2;
   }
 

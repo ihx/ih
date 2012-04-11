@@ -3,7 +3,7 @@
 #include "wrap.h"
 
 #define TIME_STEPS IH_BITARRAY_SIZE
-#define DEBUG_PRINT
+#undef DEBUG_PRINT
 
 ih_bit_t ih_classify_crow(ih_bitarray_t bitarray, ih_classify_style_t style,
     unsigned short rule_count, ...)
