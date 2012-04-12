@@ -1,16 +1,16 @@
 #include "bit.h"
 #include "bitarray.h"
 #include "classify.h"
-#include "vclass.h"
 #include "minigen.h"
 #include "trace.h"
+#include "tunnel.h"
 
-struct vclass_context_t {
+struct tunnel_context_t {
   ih_cxbitarray_t *cxbitarrays;
   unsigned long cxbitarrays_size;
   ih_classify_style_t classify_style;
 };
-typedef struct vclass_context_t vclass_context_t;
+typedef struct tunnel_context_t tunnel_context_t;
 
 static double calculate_fitness(ih_genome_t genome, void *context);
 
@@ -24,30 +24,30 @@ double calculate_fitness(ih_genome_t genome, void *context)
   unsigned char rule_5 = ih_bitarray_get_uchar(&genome, 40);
   unsigned char rule_6 = ih_bitarray_get_uchar(&genome, 48);
   unsigned char rule_7 = ih_bitarray_get_uchar(&genome, 56);
-  vclass_context_t *vclass_context = context;
+  tunnel_context_t *tunnel_context = context;
   unsigned i;
   ih_bit_t classification;
   ih_cxbitarray_t *cxbitarray;
   unsigned long total_correct = 0;
 
-  for (i = 0; i < vclass_context->cxbitarrays_size; i++) {
-    cxbitarray = vclass_context->cxbitarrays + i;
+  for (i = 0; i < tunnel_context->cxbitarrays_size; i++) {
+    cxbitarray = tunnel_context->cxbitarrays + i;
     classification = ih_classify(cxbitarray->bitarray,
-        vclass_context->classify_style, 8, rule_0, rule_1, rule_2, rule_3,
+        tunnel_context->classify_style, 8, rule_0, rule_1, rule_2, rule_3,
         rule_4, rule_5, rule_6, rule_7);
     if (classification == cxbitarray->classification) {
       total_correct++;
     }
   }
 
-  return (double) total_correct / vclass_context->cxbitarrays_size;
+  return (double) total_correct / tunnel_context->cxbitarrays_size;
 }
 
-void ih_vclass_evolve(ih_cxbitarray_t *cxbitarrays,
+void ih_tunnel_evolve(ih_cxbitarray_t *cxbitarrays,
     unsigned long cxbitarrays_size, double required_fitness,
     ih_classify_style_t classify_style, unsigned long *rules)
 {
-  vclass_context_t context;
+  tunnel_context_t context;
   ih_genome_t genome;
 
   context.cxbitarrays = cxbitarrays;
