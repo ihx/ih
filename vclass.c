@@ -37,8 +37,8 @@ double calculate_fitness(ih_genome_t genome, void *context)
 }
 
 void ih_vclass_evolve(ih_cxbitarray_t *cxbitarrays,
-    unsigned long cxbitarrays_size, ih_classify_style_t classify_style,
-    unsigned long *rules)
+    unsigned long cxbitarrays_size, double required_fitness,
+    ih_classify_style_t classify_style, unsigned long *rules)
 {
   vclass_context_t context;
   ih_genome_t genome;
@@ -47,7 +47,7 @@ void ih_vclass_evolve(ih_cxbitarray_t *cxbitarrays,
   context.cxbitarrays_size = cxbitarrays_size;
   context.classify_style = classify_style;
 
-  genome = ih_minigen_evolve(calculate_fitness, 0.75, &context);
+  genome = ih_minigen_evolve(calculate_fitness, required_fitness, &context);
 
   *(rules + 0) = ih_bitarray_get_uchar(&genome, 0);
   *(rules + 1) = ih_bitarray_get_uchar(&genome, 8);

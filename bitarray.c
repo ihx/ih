@@ -32,3 +32,19 @@ void ih_bitarray_seed_center(ih_bitarray_t *bitarray)
   *bitarray = 0;
   ih_bit_set(bitarray, IH_BITARRAY_SIZE / 2, 1);
 }
+
+void ih_bitarray_set_uchar(ih_bitarray_t *bitarray, unsigned short position,
+    unsigned char value)
+{
+  unsigned char place_value = 128;
+  ih_bit_t bit;
+  unsigned char remainder = value;
+  short i;
+
+  for (i = position + 7; i >= position; i--) {
+    bit = remainder / place_value;
+    remainder = remainder % place_value;
+    ih_bit_set(bitarray, ih_wrap(i, IH_BITARRAY_SIZE), bit);
+    place_value /= 2;
+  }
+}

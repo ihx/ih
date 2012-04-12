@@ -5,7 +5,7 @@
 #include "cxbitarray.h"
 
 void ih_vclass_evolve(ih_cxbitarray_t *cxbitarrays,
-    unsigned long cxbitarrays_size, ih_classify_style_t classify_style,
-    unsigned long *rules);
+    unsigned long cxbitarrays_size, double required_fitness,
+    ih_classify_style_t classify_style, unsigned long *rules);
 
 #endif
