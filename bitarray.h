@@ -3,9 +3,9 @@
 
 #include "standard.h"
 
-typedef uint32_t ih_bitarray_t;
+typedef uint64_t ih_bitarray_t;
 
-#define IH_BITARRAY_SIZE 32
+#define IH_BITARRAY_SIZE 64
 
 unsigned char ih_bitarray_get_uchar(ih_bitarray_t *bitarray,
     unsigned short position);

@@ -30,7 +30,10 @@ void ih_bitarray_randomize(ih_bitarray_t *bitarray)
 void ih_bitarray_seed_center(ih_bitarray_t *bitarray)
 {
   *bitarray = 0;
-  ih_bit_set(bitarray, IH_BITARRAY_SIZE / 2, 1);
+  /*
+    this {- 1} gets this compiling with bitarray == uint64_t
+  */
+  ih_bit_set(bitarray, (IH_BITARRAY_SIZE - 1) / 2, 1);
 }
 
 void ih_bitarray_set_uchar(ih_bitarray_t *bitarray, unsigned short position,
