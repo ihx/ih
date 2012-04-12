@@ -12,6 +12,8 @@ struct vclass_context_t {
 };
 typedef struct vclass_context_t vclass_context_t;
 
+static double calculate_fitness(ih_genome_t genome, void *context);
+
 double calculate_fitness(ih_genome_t genome, void *context)
 {
   unsigned char rule_0 = ih_bitarray_get_uchar(&genome, 0);
