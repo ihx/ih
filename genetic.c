@@ -4,16 +4,15 @@
 #include "trace.h"
 #include "wrap.h"
 
-#define BACKWASH_MODULUS 64
+#define BACKWASH_MODULUS 32
 #define BLOWTHROUGH_MODULUS 2
 #define DIRECTION_GENE 0
-
+#define MAX_MOVE 4
 #define MUTATION_MODULUS 1024
 #define WORLD_DIMENSION IH_BITARRAY_SIZE
 
 #define BURST_COUNT (WORLD_DIMENSION * WORLD_DIMENSION * 4)
 #define MAX_EVOLUTIONS WORLD_DIMENSION * WORLD_DIMENSION * 32768
-#define MAX_MOVE 4
 
 struct direction_t;
 typedef struct direction_t direction_t;
@@ -64,10 +63,10 @@ void calculate_new_position(ih_genetic_t *genetic, organism_t *organism,
     position_t *new_position)
 {
   double fitness = get_fitness(genetic, *current_position);
-  new_position->x = ih_wrap(current_position->x + (direction->x * fitness
-          * MAX_MOVE), WORLD_DIMENSION);
-  new_position->y = ih_wrap(current_position->y + (direction->y * fitness
-          * MAX_MOVE), WORLD_DIMENSION);
+  new_position->x = ih_wrap(current_position->x
+      + (direction->x * fitness * (random() % MAX_MOVE)), WORLD_DIMENSION);
+  new_position->y = ih_wrap(current_position->y
+      + (direction->y * fitness * (random() % MAX_MOVE)), WORLD_DIMENSION);
 }
 
 void evolve(ih_genetic_t *genetic)
@@ -93,24 +92,28 @@ void evolve(ih_genetic_t *genetic)
   target_fitness = get_fitness(genetic, new_position);
   if (fitness > target_fitness) {
     meet(organism, target_organism);
+    move(genetic, &current_position, &new_position);
   }
-  move(genetic, &current_position, &new_position);
 }
 
 void get_direction(organism_t *organism, direction_t *direction)
 {
-  unsigned char x_gene = ih_bitarray_get_uint8(&organism->genome,
-      DIRECTION_GENE);
-  unsigned char y_gene = ih_bitarray_get_uint8(&organism->genome,
-      DIRECTION_GENE + 8);
+  unsigned char x_gene_mod_3 = ih_bitarray_get_uint8(&organism->genome,
+      DIRECTION_GENE) % 3;
+  unsigned char y_gene_mod_3 = ih_bitarray_get_uint8(&organism->genome,
+      DIRECTION_GENE + 8) % 3;
 
-  if (0 == (x_gene % 2)) {
+  if (0 == x_gene_mod_3) {
     direction->x = -1;
+  } else if (1 == x_gene_mod_3) {
+    direction->x = 0;
   } else {
     direction->x = 1;
   }
-  if (0 == (y_gene % 2)) {
+  if (0 == y_gene_mod_3) {
     direction->y = -1;
+  } else if (1 == y_gene_mod_3) {
+    direction->y = 0;
   } else {
     direction->y = 1;
   }
@@ -205,9 +208,9 @@ void meet(organism_t *organism, organism_t *target_organism)
       ih_bit_set(&target_organism->genome, i, ih_bit_get(organism->genome, i));
     } else if (0 == (random() % BACKWASH_MODULUS)) {
       ih_bit_set(&organism->genome, i, ih_bit_get(target_organism->genome, i));
+      organism->fitness_is_valid = ih_boole_false;
     }
   }
-  organism->fitness_is_valid = ih_boole_false;
   target_organism->fitness_is_valid = ih_boole_false;
 }
 

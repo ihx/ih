@@ -56,11 +56,18 @@ void ih_tube_evolve(ih_cxbitarray_t *cxbitarrays,
   genome = ih_minigen_evolve(calculate_fitness, required_fitness, &context);
   */
   genetic = ih_genetic_create(calculate_fitness, &context, NULL);
-  ih_genetic_evolve(genetic, required_fitness, &genome, &fitness);
-  ih_genetic_destroy(genetic);
-
-  *(rules + 0) = ih_bitarray_get_uint16(&genome, 0);
-  *(rules + 1) = ih_bitarray_get_uint16(&genome, 16);
-  *(rules + 2) = ih_bitarray_get_uint16(&genome, 32);
-  *(rules + 3) = ih_bitarray_get_uint16(&genome, 48);
+  if (genetic) {
+    ih_genetic_evolve(genetic, required_fitness, &genome, &fitness);
+    ih_genetic_destroy(genetic);
+    *(rules + 0) = ih_bitarray_get_uint16(&genome, 0);
+    *(rules + 1) = ih_bitarray_get_uint16(&genome, 16);
+    *(rules + 2) = ih_bitarray_get_uint16(&genome, 32);
+    *(rules + 3) = ih_bitarray_get_uint16(&genome, 48);
+  } else {
+    ih_trace("ih_genetic_create");
+    *(rules + 0) = 0;
+    *(rules + 1) = 0;
+    *(rules + 2) = 0;
+    *(rules + 3) = 0;
+  }
 }
