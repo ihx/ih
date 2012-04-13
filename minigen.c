@@ -21,13 +21,11 @@ struct organism_t {
 typedef struct organism_t organism_t;
 
 struct minigen_t {
-  ih_minigen_calculate_fitness_f calculate_fitness;
+  ih_fitness_calculate_f calculate_fitness;
   organism_t population[POPULATION_SIZE];
   double fittest_fitness;
   unsigned short fittest_organism_index;
-  double required_fitness;
   void *context;
-  ih_boole_t run_once;
 };
 typedef struct minigen_t minigen_t;
 
@@ -38,8 +36,7 @@ static void diverge(minigen_t *minigen);
 static double get_fitness(minigen_t *minigen,
     unsigned short organism_index);
 static void init(minigen_t *minigen,
-    ih_minigen_calculate_fitness_f calculate_fitness, double required_fitness,
-    void *context);
+    ih_fitness_calculate_f calculate_fitness, void *context);
 static void randomize_genome(ih_genome_t *genome);
 
 unsigned short choose_child(minigen_t *minigen)
@@ -113,6 +110,7 @@ void diverge(minigen_t *minigen)
       if (0 == (random() % DIVERGE_MODULUS)) {
         organism = minigen->population + i;
         randomize_genome(&organism->genome);
+        organism->fitness_is_valid = ih_boole_false;
       }
     }
   }
@@ -129,13 +127,14 @@ double get_fitness(minigen_t *minigen, unsigned short organism_index)
       minigen->fittest_fitness = organism->fitness;
       minigen->fittest_organism_index = organism_index;
     }
+    organism->fitness_is_valid = ih_boole_true;
   }
 
   return organism->fitness;
 }
 
 ih_genome_t ih_minigen_evolve
-(ih_minigen_calculate_fitness_f calculate_fitness, double required_fitness,
+(ih_fitness_calculate_f calculate_fitness, double required_fitness,
     void *context)
 {
   unsigned short parent_a_index;
@@ -150,9 +149,9 @@ ih_genome_t ih_minigen_evolve
   unsigned long mating_count = 0;
   minigen_t minigen;
 
-  init(&minigen, calculate_fitness, required_fitness, context);
+  init(&minigen, calculate_fitness, context);
 
-  while ((minigen.fittest_fitness < minigen.required_fitness)
+  while ((minigen.fittest_fitness < required_fitness)
       && (mating_count < MAX_MATINGS)) {
     if (converged(&minigen)) {
       diverge(&minigen);
@@ -175,6 +174,7 @@ ih_genome_t ih_minigen_evolve
         ih_bit_set(&child->genome, random() % IH_GENOME_SIZE_BITS,
             random() % 2);
       }
+      child->fitness_is_valid = ih_boole_false;
       mating_count++;
     }
     /*  printf("+");  */
@@ -184,9 +184,8 @@ ih_genome_t ih_minigen_evolve
   return (minigen.population + minigen.fittest_organism_index)->genome;
 }
 
-void init(minigen_t *minigen,
-    ih_minigen_calculate_fitness_f calculate_fitness,
-    double required_fitness, void *context) {
+void init(minigen_t *minigen, ih_fitness_calculate_f calculate_fitness,
+    void *context) {
   unsigned short i;
   organism_t *organism;
 
@@ -198,7 +197,6 @@ void init(minigen_t *minigen,
   }
   minigen->fittest_fitness = 0.0;
   minigen->fittest_organism_index = 0;
-  minigen->required_fitness = required_fitness;
   minigen->context = context;
   srandom(time(NULL));
 }

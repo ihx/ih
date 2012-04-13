@@ -1,4 +1,4 @@
-CFLAGS = -ansi -pedantic -Wall -Werror -o3 -D_BSD_SOURCE
+CFLAGS = -ansi -pedantic -Wall -Werror -o3 -D_BSD_SOURCE -g
 
 SOURCES = $(shell ls *.c)
 OBJECTS = $(SOURCES:.c=.o)
@@ -11,4 +11,4 @@ clean:
 	rm -f *~ .*~ *.o .etags $(LIBRARY)
 
 stats:
-	wc -l *.h *.c
+	wc -l *.[h,c]

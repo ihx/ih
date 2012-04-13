@@ -16,14 +16,14 @@ static double calculate_fitness(ih_genome_t genome, void *context);
 
 double calculate_fitness(ih_genome_t genome, void *context)
 {
-  unsigned char rule_0 = ih_bitarray_get_uchar(&genome, 0);
-  unsigned char rule_1 = ih_bitarray_get_uchar(&genome, 8);
-  unsigned char rule_2 = ih_bitarray_get_uchar(&genome, 16);
-  unsigned char rule_3 = ih_bitarray_get_uchar(&genome, 24);
-  unsigned char rule_4 = ih_bitarray_get_uchar(&genome, 32);
-  unsigned char rule_5 = ih_bitarray_get_uchar(&genome, 40);
-  unsigned char rule_6 = ih_bitarray_get_uchar(&genome, 48);
-  unsigned char rule_7 = ih_bitarray_get_uchar(&genome, 56);
+  unsigned char rule_0 = ih_bitarray_get_uint8(&genome, 0);
+  unsigned char rule_1 = ih_bitarray_get_uint8(&genome, 8);
+  unsigned char rule_2 = ih_bitarray_get_uint8(&genome, 16);
+  unsigned char rule_3 = ih_bitarray_get_uint8(&genome, 24);
+  unsigned char rule_4 = ih_bitarray_get_uint8(&genome, 32);
+  unsigned char rule_5 = ih_bitarray_get_uint8(&genome, 40);
+  unsigned char rule_6 = ih_bitarray_get_uint8(&genome, 48);
+  unsigned char rule_7 = ih_bitarray_get_uint8(&genome, 56);
   tunnel_context_t *tunnel_context = context;
   unsigned i;
   ih_bit_t classification;
@@ -56,12 +56,12 @@ void ih_tunnel_evolve(ih_cxbitarray_t *cxbitarrays,
 
   genome = ih_minigen_evolve(calculate_fitness, required_fitness, &context);
 
-  *(rules + 0) = ih_bitarray_get_uchar(&genome, 0);
-  *(rules + 1) = ih_bitarray_get_uchar(&genome, 8);
-  *(rules + 2) = ih_bitarray_get_uchar(&genome, 16);
-  *(rules + 3) = ih_bitarray_get_uchar(&genome, 24);
-  *(rules + 4) = ih_bitarray_get_uchar(&genome, 32);
-  *(rules + 5) = ih_bitarray_get_uchar(&genome, 40);
-  *(rules + 6) = ih_bitarray_get_uchar(&genome, 48);
-  *(rules + 7) = ih_bitarray_get_uchar(&genome, 56);
+  *(rules + 0) = ih_bitarray_get_uint8(&genome, 0);
+  *(rules + 1) = ih_bitarray_get_uint8(&genome, 8);
+  *(rules + 2) = ih_bitarray_get_uint8(&genome, 16);
+  *(rules + 3) = ih_bitarray_get_uint8(&genome, 24);
+  *(rules + 4) = ih_bitarray_get_uint8(&genome, 32);
+  *(rules + 5) = ih_bitarray_get_uint8(&genome, 40);
+  *(rules + 6) = ih_bitarray_get_uint8(&genome, 48);
+  *(rules + 7) = ih_bitarray_get_uint8(&genome, 56);
 }
