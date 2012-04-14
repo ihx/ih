@@ -5,7 +5,7 @@
 #include "trace.h"
 
 #define CONVERGENCE_SAMPLE_SIZE 16               /*  sqrt(POPULATION_SIZE)  */
-#define CONVERGENCE_THRESHOLD 0.2
+#define CONVERGENCE_THRESHOLD_DIVISOR 5
 #define DIVERGE_MODULUS 2
 #define POPULATION_SIZE 256
 
@@ -31,13 +31,12 @@ typedef struct minigen_t minigen_t;
 
 static unsigned short choose_child(minigen_t *minigen);
 static unsigned short choose_parent(minigen_t *minigen);
-static ih_boole_t converged(minigen_t *minigen);
+static ih_boole_t converged(minigen_t *minigen, double required_fitness);
 static void diverge(minigen_t *minigen);
 static double get_fitness(minigen_t *minigen,
     unsigned short organism_index);
 static void init(minigen_t *minigen,
     ih_fitness_calculate_f calculate_fitness, void *context);
-static void randomize_genome(ih_genome_t *genome);
 
 unsigned short choose_child(minigen_t *minigen)
 {
@@ -71,7 +70,7 @@ unsigned short choose_parent(minigen_t *minigen)
   return parent_index;
 }
 
-static ih_boole_t converged(minigen_t *minigen)
+static ih_boole_t converged(minigen_t *minigen, double required_fitness)
 {
   double max_fitness = 0.0;
   double min_fitness = 1.0;
@@ -91,7 +90,8 @@ static ih_boole_t converged(minigen_t *minigen)
     }
   }
 
-  if (fabs(max_fitness - min_fitness) < CONVERGENCE_THRESHOLD) {
+  if (fabs(max_fitness - min_fitness)
+      < (required_fitness / CONVERGENCE_THRESHOLD_DIVISOR)) {
     converged = ih_boole_true;
   } else {
     converged = ih_boole_false;
@@ -109,7 +109,7 @@ void diverge(minigen_t *minigen)
     if (i != minigen->fittest_organism_index) {
       if (0 == (random() % DIVERGE_MODULUS)) {
         organism = minigen->population + i;
-        randomize_genome(&organism->genome);
+        ih_bitarray_randomize(&organism->genome);
         organism->fitness_is_valid = ih_boole_false;
       }
     }
@@ -153,7 +153,7 @@ ih_genome_t ih_minigen_evolve
 
   while ((minigen.fittest_fitness < required_fitness)
       && (mating_count < MAX_MATINGS)) {
-    if (converged(&minigen)) {
+    if (converged(&minigen, required_fitness)) {
       diverge(&minigen);
     }
     for (j = 0; j < BURST_COUNT; j++) {
@@ -192,20 +192,11 @@ void init(minigen_t *minigen, ih_fitness_calculate_f calculate_fitness,
   minigen->calculate_fitness = calculate_fitness;
   for (i = 0; i < POPULATION_SIZE; i++) {
     organism = minigen->population + i;
-    randomize_genome(&organism->genome);
+    ih_bitarray_randomize(&organism->genome);
     organism->fitness_is_valid = ih_boole_false;
   }
   minigen->fittest_fitness = 0.0;
   minigen->fittest_organism_index = 0;
   minigen->context = context;
   srandom(time(NULL));
-}
-
-void randomize_genome(ih_genome_t *genome)
-{
-  unsigned short i;
-
-  for (i = 0; i < IH_GENOME_SIZE_BITS; i++) {
-    ih_bit_set(genome, i, random() % 2);
-  }
 }

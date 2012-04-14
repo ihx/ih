@@ -6,12 +6,15 @@
 
 #define BACKWASH_MODULUS 32
 #define BLOWTHROUGH_MODULUS 2
+#define CONVERGENCE_THRESHOLD_DIVISOR 5
 #define DIRECTION_GENE 0
+#define DIVERGE_MODULUS 2
 #define MAX_MOVE 4
 #define MUTATION_MODULUS 1024
 #define WORLD_DIMENSION IH_BITARRAY_SIZE
 
 #define BURST_COUNT (WORLD_DIMENSION * WORLD_DIMENSION * 4)
+#define CONVERGENCE_SAMPLE_SIZE WORLD_DIMENSION
 #define MAX_EVOLUTIONS WORLD_DIMENSION * WORLD_DIMENSION * 32768
 
 struct direction_t;
@@ -51,6 +54,8 @@ struct ih_genetic_t {
 static void calculate_new_position(ih_genetic_t *genetic, organism_t *organism,
     position_t *current_position, direction_t *direction,
     position_t *new_position);
+static ih_boole_t converged(ih_genetic_t *genetic);
+static void diverge(ih_genetic_t *genetic);
 static void evolve(ih_genetic_t *genetic);
 static void get_direction(organism_t *organism, direction_t *direction);
 static double get_fitness(ih_genetic_t *genetic, position_t position);
@@ -67,6 +72,57 @@ void calculate_new_position(ih_genetic_t *genetic, organism_t *organism,
       + (direction->x * fitness * (random() % MAX_MOVE)), WORLD_DIMENSION);
   new_position->y = ih_wrap(current_position->y
       + (direction->y * fitness * (random() % MAX_MOVE)), WORLD_DIMENSION);
+}
+
+static ih_boole_t converged(ih_genetic_t *genetic)
+{
+  double max_fitness = 0.0;
+  double min_fitness = 1.0;
+  unsigned short i;
+  position_t organism_position;
+  double fitness;
+  ih_boole_t converged;
+
+  for (i = 0; i < CONVERGENCE_SAMPLE_SIZE; i++) {
+    organism_position.x = random() % WORLD_DIMENSION;
+    organism_position.y = random() % WORLD_DIMENSION;
+    fitness = get_fitness(genetic, organism_position);
+    if (fitness > max_fitness) {
+      max_fitness = fitness;
+    }
+    if (fitness < min_fitness) {
+      min_fitness = fitness;
+    }
+  }
+
+  if (fabs(max_fitness - min_fitness)
+      < (genetic->required_fitness / CONVERGENCE_THRESHOLD_DIVISOR)) {
+    converged = ih_boole_true;
+  } else {
+    converged = ih_boole_false;
+  }
+
+  return converged;
+}
+
+void diverge(ih_genetic_t *genetic)
+{
+  unsigned short x;
+  unsigned short y;
+  organism_t *organism;
+
+  for (x = 0; x < WORLD_DIMENSION; x++) {
+    for (y = 0; y < WORLD_DIMENSION; y++) {
+      if (!(x == genetic->fittest_organism_position.x
+              && y == genetic->fittest_organism_position.y)) {
+        if (0 == (random() % DIVERGE_MODULUS)) {
+          organism = &genetic->population[x][y];
+          ih_bitarray_randomize(&organism->genome);
+          organism->fitness_is_valid = ih_boole_false;
+        }
+      }
+    }
+  }
 }
 
 void evolve(ih_genetic_t *genetic)
@@ -183,14 +239,22 @@ void ih_genetic_evolve(ih_genetic_t *genetic, double required_fitness,
   unsigned long evolution_count = 0;
 
   if (IH_GENETIC_NO_REQUIRED_FITNESS == required_fitness) {
+    if (converged(genetic)) {
+      diverge(genetic);
+    }
     for (i = 0; i < BURST_COUNT; i++) {
       evolve(genetic);
     }
   } else {
     while ((genetic->fittest_fitness < required_fitness)
         && (evolution_count < MAX_EVOLUTIONS)) {
-      evolve(genetic);
-      evolution_count++;
+      if (converged(genetic)) {
+        diverge(genetic);
+      }
+      for (i = 0; i < BURST_COUNT; i++) {
+        evolve(genetic);
+        evolution_count++;
+      }
     }
   }
 
