@@ -70,7 +70,7 @@ unsigned short choose_parent(minigen_t *minigen)
   return parent_index;
 }
 
-static ih_boole_t converged(minigen_t *minigen, double required_fitness)
+ih_boole_t converged(minigen_t *minigen, double required_fitness)
 {
   double max_fitness = 0.0;
   double min_fitness = 1.0;
